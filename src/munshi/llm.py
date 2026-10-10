@@ -36,7 +36,6 @@ def ask_json(role: str, system: str, user: str, images: list[Path] | None = None
         content = [{"type": "text", "text": user}] + [_image_part(p) for p in images]
     reply = client().chat.completions.create(
         model=model_for(role),
-        temperature=0,
         messages=[{"role": "system", "content": system}, {"role": "user", "content": content}],
     )
     return _parse_json(reply.choices[0].message.content or "")
