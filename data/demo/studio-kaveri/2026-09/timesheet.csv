@@ -1,0 +1,4 @@
+month,client,project,hours,billing_status
+2026-09,Acme Retail Pvt Ltd,Website refresh - phase 2,18,invoiced:KAV-2026-031
+2026-09,Nimbus Health Pvt Ltd,Patient app UI,96,"invoiced:KAV-2026-035,KAV-2026-036"
+2026-09,Zenith Foods Pvt Ltd,Packaging design sprint,40,not invoiced

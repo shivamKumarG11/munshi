@@ -15,3 +15,6 @@ wheels/
 state/
 data/raw/
 !data/raw/.gitkeep
+
+# Benchmark images are rebuilt by scripts/extract_sroie.py
+data/benchmark/sroie/images/
