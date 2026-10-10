@@ -14,6 +14,7 @@ from munshi import tracing
 from munshi.config import settings
 
 _client = None
+usage: dict[str, dict[str, int]] = {}   # model -> {"calls", "prompt", "completion"} for this process
 
 
 def client() -> OpenAI:
@@ -38,6 +39,11 @@ def ask_json(role: str, system: str, user: str, images: list[Path] | None = None
         model=model_for(role),
         messages=[{"role": "system", "content": system}, {"role": "user", "content": content}],
     )
+    u = usage.setdefault(model_for(role), {"calls": 0, "prompt": 0, "completion": 0})
+    u["calls"] += 1
+    if reply.usage:
+        u["prompt"] += reply.usage.prompt_tokens or 0
+        u["completion"] += reply.usage.completion_tokens or 0
     return _parse_json(reply.choices[0].message.content or "")
 
 

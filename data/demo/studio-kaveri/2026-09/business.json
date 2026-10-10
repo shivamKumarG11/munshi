@@ -1,0 +1,22 @@
+{
+  "name": "Studio Kaveri Design LLP",
+  "gstin": "29ABCFS1234K1Z5",
+  "address": "3rd Floor, 80 Feet Road, Koramangala, Bengaluru 560034",
+  "bank": "HDFC Bank current account XX4421",
+  "industry": "Design and digital product studio",
+  "peer_sics": [
+    "7311",
+    "8742"
+  ],
+  "hourly_rate": "2000.00",
+  "gst_rate": "0.18",
+  "income_tax_provision_rate": "0.25",
+  "payment_terms_days": 15,
+  "non_claimable_tax_accounts": [
+    "Expenses:Meals"
+  ],
+  "client_emails": {
+    "Zenith Foods Pvt Ltd": "accounts@zenithfoods.example",
+    "Orbit Logistics Pvt Ltd": "ap@orbitlogistics.example"
+  }
+}

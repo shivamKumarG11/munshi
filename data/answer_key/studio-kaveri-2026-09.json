@@ -19,8 +19,8 @@
   },
   "expected_tax": {
     "output_tax_collected": "61627.12",
-    "input_tax_claimable": "11789.82",
-    "net_indirect_tax": "49837.30"
+    "input_tax_claimable": "11609.82",
+    "net_indirect_tax": "50017.30"
   },
   "transactions": [
     {
@@ -169,11 +169,11 @@
       "narration": "UPI-BRIGHTLINE STATIONERS",
       "amount": "-1180.00",
       "account": "Expenses:Office-Supplies",
-      "tax": "180.00",
+      "tax": "0",
       "documents": [
         "D08"
       ],
-      "note": "TRAP 7: receipt photo is rotated and blurred"
+      "note": "TRAP 7: receipt photo is rotated and blurred; no GST breakdown, so no input credit"
     },
     {
       "bank_txn_id": "B15",
