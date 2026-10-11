@@ -32,6 +32,17 @@ def _latest_run() -> Path | None:
     return next((r for r in runs if (r / "facts.json").exists()), None)
 
 
+def _show(box, text: str) -> None:
+    if "✗" in text:
+        box.error(text)
+    elif "✅" in text:
+        box.success(text)
+    elif "gap_hunt" in text:
+        box.warning(text)
+    else:
+        box.markdown(text)
+
+
 def _load(run: Path) -> dict:
     j = lambda n: json.loads((run / n).read_text(encoding="utf-8"))
     return {"facts": j("facts.json"), "entries": j("entries.json"), "actions": j("actions.json"),
@@ -64,15 +75,17 @@ with tab_close:
     c1.markdown("**Inputs**\n\n- `bank_statement.csv`\n- `invoices_issued.csv`\n- `timesheet.csv`\n"
                 + "\n".join(f"- `{n}`" for n in inputs))
     with c2:
-        if st.button("Close the month", type="primary", use_container_width=True):
+        if st.button("Close the month", type="primary", width="stretch"):
             log = st.container(border=True)
             icons = {"plan": "🗂", "research": "🔎", "read": "📄", "match": "🔗", "post": "✏️", "verify": "⚖️",
                      "gap_hunt": "🕵️", "actions": "✅", "brief": "📰"}
 
+            st.session_state["log"] = []
+
             def progress(step, message, data=None):
-                style = "error" if message.startswith("✗") else ("success" if message.startswith("✅") else None)
                 text = f"{icons.get(step, '•')} **{step}**: {message}"
-                (log.error if style == "error" else log.success if style == "success" else log.markdown)(text)
+                st.session_state["log"].append(text)
+                _show(log, text)
 
             out_dir = ROOT / "runs" / f"app-{datetime.now():%Y%m%d-%H%M%S}-v2"
             session = f"app-close-{datetime.now():%H%M%S}"
@@ -81,9 +94,15 @@ with tab_close:
                     close.close_v2(MONTH, out_dir, progress=progress, live_actions=live)
                 result = score.score(out_dir, KEY)
                 (out_dir / "score.json").write_text(json.dumps(result, indent=1), encoding="utf-8")
-            st.success(f"Done in {result['seconds']} s · {result['llm_calls']} model calls · "
-                       f"traps caught {result['traps_caught']}/{result['traps_total']} · neatlogs session `{session}`")
-            st.rerun()
+            st.session_state["done"] = (f"Done in {result['seconds']} s · {result['llm_calls']} model calls · "
+                                        f"traps caught {result['traps_caught']}/{result['traps_total']} · "
+                                        f"neatlogs session `{session}`")
+        elif st.session_state.get("log"):
+            log = st.container(border=True)
+            for line in st.session_state["log"]:
+                _show(log, line)
+        if st.session_state.get("done"):
+            st.success(st.session_state["done"])
 
 run = _latest_run()
 data = _load(run) if run else None
@@ -103,7 +122,7 @@ with tab_books:
         rows = [{"bank line": e["bank_txn_id"], "date": e["date"], "payee": e["payee"][:42], "account": e["account"],
                  "amount ₹": float(e["amount"]), "tax ₹": float(e["tax"]), "evidence": ", ".join(e["document_ids"]) or "—",
                  "decided by": e["decided_by"], "why": e["narration"][:90]} for e in data["entries"]]
-        st.dataframe(rows, use_container_width=True, hide_index=True)
+        st.dataframe(rows, width="stretch", hide_index=True)
         with st.expander("The ledger (books as code: beancount, committed to Git every close)"):
             st.code(data["ledger"], language="text")
 
@@ -140,7 +159,7 @@ with tab_research:
         st.dataframe([{"company": c["name"], "CIK": c["cik"], "revenue (USD)": f"{float(c['revenue_usd']):,.0f}",
                        "operating margin": f"{c['operating_margin']:.1%}",
                        "effective tax rate": f"{c['effective_tax_rate']:.1%}" if c.get("effective_tax_rate") is not None else "—"}
-                      for c in p["companies"]], use_container_width=True, hide_index=True)
+                      for c in p["companies"]], width="stretch", hide_index=True)
         st.caption(p["source"])
     else:
         st.info("Close the month first.")
@@ -153,9 +172,9 @@ with tab_evidence:
         metrics = ["balanced", "bank_gap", "categorisation_accuracy", "exact_entries", "duplicate_posts", "traps_caught",
                    "net_indirect_tax_correct", "llm_calls", "llm_tokens", "seconds"]
         st.dataframe([{"metric": k, "v1 (naive)": str(v1.get(k)), "v2 (Munshi)": str(v2.get(k))} for k in metrics],
-                     use_container_width=True, hide_index=True)
+                     width="stretch", hide_index=True)
         st.dataframe([{"trap": t, "v1": "✅" if v1["traps"][t] else "✗", "v2": "✅" if v2["traps"][t] else "✗"}
-                      for t in v2["traps"]], use_container_width=True, hide_index=True)
+                      for t in v2["traps"]], width="stretch", hide_index=True)
     else:
         st.info("Evidence runs not found yet (runs/evidence).")
     for f in sorted((ROOT / "runs").glob("benchmark-*.json"))[-2:]:
