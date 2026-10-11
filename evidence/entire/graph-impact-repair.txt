@@ -1,0 +1,22 @@
+$ entire graph impact --symbol repair --format text
+Index: cache-miss (561ms) | Query: 1ms | Total: 562ms
+Impact: repair (src/munshi/ledger.py:109) def=109 span=109-129 [function]
+Blast radius: 0 callers (0 direct, 0 transitive), 0 callees, 7 type consumers, 0 data flows, 0 co-change files, 0 siblings.
+Callers (0 direct, 0 transitive; who breaks if behavior changes):
+- none
+Callees (0; what it depends on):
+- none
+Type consumers (0 in, 7 out; USES_TYPE/PARAM_TYPE/RETURNS_TYPE):
+- -> Gap (src/munshi/ledger.py:75) [PARAM_TYPE]
+- -> Gap (src/munshi/ledger.py:75) [USES_TYPE]
+- -> BankTxn (src/munshi/models.py:9) [PARAM_TYPE]
+- -> BankTxn (src/munshi/models.py:9) [USES_TYPE]
+- -> Entry (src/munshi/models.py:36) [PARAM_TYPE]
+- -> Entry (src/munshi/models.py:36) [RETURNS_TYPE]
+- -> Entry (src/munshi/models.py:36) [USES_TYPE]
+Data flows (0 in, 0 out):
+- none
+Co-change coupling (0; files that historically change with src/munshi/ledger.py):
+- none
+Same-container siblings (0):
+- none

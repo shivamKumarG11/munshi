@@ -1,0 +1,51 @@
+$ entire graph commit HEAD
+Semantic changes 091a24568c9b212b434d0ceb0f21e2a7efad76ec..HEAD
+
+.gitignore (Git Ignore)
+  ~ document .gitignore body changed (0 dependents)
+
+data/answer_key/studio-kaveri-2026-09.json (JSON)
+  ~ section input_tax_claimable body changed (3 dependents)
+  ~ section net_indirect_tax body changed (4 dependents)
+
+data/demo/studio-kaveri/2026-09/business.json (JSON)
+  + section name added
+  + section gstin added
+  + section address added
+  + section bank added
+  + section industry added
+  + section peer_sics added
+  + section hourly_rate added
+  + section gst_rate added
+  + section income_tax_provision_rate added
+  + section payment_terms_days added
+  + section non_claimable_tax_accounts added
+  + section Expenses added
+  + section client_emails added
+
+data/demo/studio-kaveri/2026-09/owner_answers.json (JSON)
+  + section account added
+  + section answer added
+  + section NETFLIX added
+
+scripts/generate_month.py (Python)
+  ~ function build body changed (5 dependents)
+
+src/munshi/categoriser.py (Python)
+  + class Question added
+  + function _valid added
+  + function categorise added
+  + function income_entry added
+
+src/munshi/cli.py (Python)
+  + function main added
+
+src/munshi/close.py (Python)
+  + function _noop added
+  + function load_month added
+  + function _bank_line_for_bill added
+  + function close_v2 added
+  + function verify added
+  + function _explain_gap added
+  + function _tax added
+  + function _actions added

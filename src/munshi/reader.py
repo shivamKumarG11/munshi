@@ -18,12 +18,12 @@ from munshi.models import Document, LineItem
 
 SYSTEM = """You extract data from business documents (bills, invoices, receipts).
 Return ONLY a JSON object with these keys:
-  party: the seller/vendor name as printed
+  party: the seller's business name exactly as printed at the top (no branch, address or registration number)
   number: invoice/bill number or null
   date: YYYY-MM-DD or null
   subtotal: amount before tax as a plain number, or null
   tax: total tax amount as a plain number (0 if none shown)
-  total: the TOTAL as printed on the document (do not recompute it)
+  total: the final amount payable as printed (after any rounding adjustment; do not recompute it)
   currency: ISO code if visible, else null
   lines: list of {description, amount}
 Copy numbers exactly as printed. Never invent values; use null when unsure."""
@@ -64,12 +64,27 @@ def check(doc: Document) -> list[str]:
     return issues
 
 
+def _date(value):
+    """Models return dates in many formats; never let one crash the read."""
+    if not value:
+        return None
+    from datetime import datetime
+    text = str(value).strip()
+    for fmt in ("%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y", "%d.%m.%Y", "%d/%m/%y", "%d-%m-%y", "%d.%m.%y",
+                "%d %b %Y", "%d %b %y", "%d %B %Y", "%b %d, %Y"):
+        try:
+            return datetime.strptime(text[:20].strip(), fmt).date()
+        except ValueError:
+            continue
+    return None
+
+
 def _to_document(raw: dict, doc_id: str, kind: str, source: Path) -> Document:
     return Document(
         id=doc_id, kind=kind, source=str(source).replace("\\", "/"),
         party=(raw.get("party") or "UNKNOWN").strip(),
         number=raw.get("number"),
-        date=raw.get("date") or None,
+        date=_date(raw.get("date")),
         subtotal=_dec(raw.get("subtotal")),
         tax=_dec(raw.get("tax")) or Decimal("0"),
         total=_dec(raw.get("total")) or Decimal("0"),

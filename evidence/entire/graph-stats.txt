@@ -1,0 +1,7 @@
+$ entire graph stats
+entire graph stats
+  repo:     D:\desktop\hackathon\luma\neatHack\hackathon-project\munshi
+  sessions: not found (looked in C:\Users\ASUS\.claude\projects\D--desktop-hackathon-luma-neatHack-hackathon-project-munshi)
+
+No coding-agent session transcripts exist for this repo yet, so there is
+nothing to compare. Run some work with `entire graph search` and re-run this.

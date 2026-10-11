@@ -1,0 +1,81 @@
+$ entire graph search --query "where does munshi repair gaps between the ledger and the bank" --format text --top-k 5
+1. src/munshi/ledger.py:82-129 [contains ranks 1,3 - contiguous, nothing elided] score=32.8734 symbol=repair kind=function focus=109 signals=path,body,symbol-name,signature,complete-symbol,contiguous-span
+def find_gaps(entries: list[Entry], bank: list[BankTxn]) -> list[Gap]:
+    """Compare what was posted to what the bank says happened, line by line."""
+    by_id = {t.id: t for t in bank}
+    posted = Counter(e.bank_txn_id for e in entries)
+    gaps: list[Gap] = []
+    for txn_id, n in posted.items():
+        txn = by_id.get(txn_id)
+        if txn is None:
+            amount = sum((e.amount for e in entries if e.bank_txn_id == txn_id), Decimal("0"))
+            gaps.append(Gap(kind="unknown_txn", bank_txn_id=txn_id, effect=amount,
+                            detail=f"posted {n}x but no such bank line"))
+        elif n > 1:
+            gaps.append(Gap(kind="duplicate_post", bank_txn_id=txn_id, effect=txn.amount * (n - 1),
+                            detail=f"'{txn.description}' {txn.amount} posted {n} times"))
+    for txn in bank:
+        if txn.id not in posted:
+            gaps.append(Gap(kind="missing_post", bank_txn_id=txn.id, effect=-txn.amount,
+                            detail=f"'{txn.description}' {txn.amount} on {txn.date} never posted"))
+        else:
+            posted_sum = sum((e.amount for e in entries if e.bank_txn_id == txn.id), Decimal("0"))
+            expected = txn.amount * posted[txn.id]
+            if posted_sum != expected:
+                gaps.append(Gap(kind="amount_mismatch", bank_txn_id=txn.id, effect=posted_sum - expected,
+                                detail=f"bank says {txn.amount}, ledger has {posted_sum / posted[txn.id]}"))
+    return gaps
+
+
+def repair(entries: list[Entry], gaps: list[Gap], bank: list[BankTxn]) -> list[Entry]:
+    """Apply only the fixes that are certain: drop duplicate posts and posts for unknown lines,
+    and correct amounts to the bank's figure. Missing posts need categorising, so they're returned
+    to the caller (the coordinator sends them back through the categoriser)."""
+    by_id = {t.id: t for t in bank}
+    drop_dupes = {g.bank_txn_id for g in gaps if g.kind == "duplicate_post"}
+    drop_unknown = {g.bank_txn_id for g in gaps if g.kind == "unknown_txn"}
+    fix_amount = {g.bank_txn_id for g in gaps if g.kind == "amount_mismatch"}
+    seen: set[str] = set()
+    fixed: list[Entry] = []
+    for e in entries:
+        if e.bank_txn_id in drop_unknown:
+            continue
+        if e.bank_txn_id in drop_dupes:
+            if e.bank_txn_id in seen:
+                continue
+            seen.add(e.bank_txn_id)
+        if e.bank_txn_id in fix_amount:
+            e = e.model_copy(update={"amount": by_id[e.bank_txn_id].amount})
+        fixed.append(e)
+    return fixed
+
+2. src/munshi/close.py:76-174 score=24.8274 symbol=close_v2 kind=function focus=150 signals=path,body,symbol-usage,complete-symbol
+def close_v2(month_dir: Path, out_dir: Path, progress: Progress = _noop, live_actions: bool = False,
+             with_peers: bool = True) -> dict:
+    t0 = time.time()
+    m = load_month(month_dir)
+    biz, bank = m["business"], m["bank"]
+    opening, closing = bankmod.opening_balance(bank), bankmod.closing_balance(bank)
+    period_start, period_end = bank[0].date.replace(day=1), _month_end(bank[0].date)
+    non_claimable = set(biz.get("non_claimable_tax_accounts", []))
+    progress("plan", f"{len(bank)} bank lines, {len(m['doc_files'])} documents, {len(m['issued'])} issued invoices",
+             {"opening": str(opening), "closing": str(closing)})
+
+    peers = None
+    if with_peers:
+        from munshi import peers as peersmod
+        progress("research", f"Finding real peers in industries {biz['peer_sics']} (SEC EDGAR)")
+        peers = peersmod.research(biz["peer_sics"])
+        progress("research", f"{len(peers['peers'])} peers; median operating margin "
+                             f"{peers['median_operating_margin']:.1%}", {"peers": [p["name"] for p in peers["peers"]]})
+
+    # 1. Read documents (cheap first, code checks, strong re-read on failure)
+    docs, hashes, reads = [], {}, {}
+    for i, path in enumerate(m["doc_files"], start=1):
+        r = reader.read(path, f"D{i:02d}", kind="receipt" if path.suffix.lower() != ".pdf" else "bill")
+        docs.append(r.document); hashes[r.document.id] = r.content_hash; reads[r.document.id] = r
+        flag = " ⚠ vendor error" if r.vendor_error else (" (re-read with strong model)" if r.model_role == "strong" else "")
+        progress("read", f"{path.name}: {r.document.party} ₹{r.document.total}{flag}")
+    correct_totals = {d.id: (d.subtotal + d.tax) if reads[d.id].vendor_error and d.subtotal is not None else d.total
+                      for d in docs}
+

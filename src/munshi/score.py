@@ -57,6 +57,13 @@ def score(run_dir: Path, key_path: Path) -> dict:
     figures = [round(abs(float(x))) for x in re.findall(r"₹\s?([\d,]+(?:\.\d+)?)", brief.replace(",", "")) if x]
     unsupported_figures = [x for x in figures if x not in known and not any(abs(x - k) <= 1 for k in known)]
 
+    # Does the brief state the TRUE profit (from the answer key)?
+    true_income = sum((Decimal(t["amount"]) - Decimal(t["tax"]) for t in key["transactions"] if t["account"].startswith("Income")), Decimal("0"))
+    true_exp = sum((-Decimal(t["amount"]) - Decimal(t["tax"]) for t in key["transactions"] if t["account"].startswith("Expenses")), Decimal("0"))
+    true_profit = round(float(true_income - true_exp))
+    brief_numbers = {round(float(x)) for x in re.findall(r"\d+(?:\.\d+)?", brief.replace(",", ""))}
+    brief_profit_correct = any(abs(n - true_profit) <= 1 for n in brief_numbers)
+
     tokens = sum(u["prompt"] + u["completion"] for u in run["llm_usage"].values())
     calls = sum(u["calls"] for u in run["llm_usage"].values())
     return {
@@ -70,6 +77,7 @@ def score(run_dir: Path, key_path: Path) -> dict:
         "net_indirect_tax_correct": tax_ok,
         "net_indirect_tax": got_tax.get("net_indirect_tax"), "expected_net_indirect_tax": exp_tax["net_indirect_tax"],
         "brief_unsupported_figures": unsupported_figures,
+        "brief_states_true_profit": brief_profit_correct, "true_profit": true_profit,
         "llm_calls": calls, "llm_tokens": tokens, "seconds": run["seconds"], "models": list(run["llm_usage"].keys()),
     }
 
