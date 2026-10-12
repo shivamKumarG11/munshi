@@ -86,9 +86,18 @@ def company_ratios(cik: str, name: str, min_fy: int = 2024) -> dict | None:
     return json.loads(json.dumps(out, default=str))
 
 
+SHIPPED = ROOT / "data" / "peers"
+
+
 @tracing.span("AGENT", name="research_peers")
 def research(industry_sics: list[str], max_peers: int = 6) -> dict:
-    """Find real filers in the business's industry, keep those with clean recent annual data."""
+    """Find real filers in the business's industry, keep those with clean recent annual data.
+
+    Results researched earlier are shipped in data/peers/ (same SEC data, fetched once) so a fresh server
+    doesn't have to download hundreds of megabytes of filings before the close can start."""
+    shipped = SHIPPED / f"{'-'.join(industry_sics)}.json"
+    if shipped.exists():
+        return json.loads(shipped.read_text(encoding="utf-8"))
     peers = []
     for sic in industry_sics:
         for c in companies_by_sic(sic):

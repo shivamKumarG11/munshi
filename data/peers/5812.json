@@ -1,0 +1,109 @@
+{
+ "industry_sics": [
+  "5812"
+ ],
+ "peers": [
+  {
+   "cik": "0001584509",
+   "name": "Aramark",
+   "revenue_usd": "18506299000",
+   "operating_margin": 0.0428,
+   "sources": {
+    "revenue": {
+     "value": "18506299000",
+     "concept": "RevenueFromContractWithCustomerIncludingAssessedTax",
+     "period_end": "2025-10-03",
+     "fy": 2025,
+     "accession": "0001584509-25-000219"
+    },
+    "operating_income": {
+     "value": "791846000",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2025-10-03",
+     "fy": 2025,
+     "accession": "0001584509-25-000219"
+    },
+    "pretax_income": {
+     "value": "430456000",
+     "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "period_end": "2025-10-03",
+     "fy": 2025,
+     "accession": "0001584509-25-000219"
+    },
+    "income_tax": {
+     "value": "103586000",
+     "concept": "IncomeTaxExpenseBenefit",
+     "period_end": "2025-10-03",
+     "fy": 2025,
+     "accession": "0001584509-25-000219"
+    }
+   },
+   "effective_tax_rate": 0.2406,
+   "sic": "5812"
+  },
+  {
+   "cik": "0000779544",
+   "name": "ARK RESTAURANTS CORP.",
+   "revenue_usd": "165751000",
+   "operating_margin": -0.0245,
+   "sources": {
+    "revenue": {
+     "value": "165751000",
+     "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "period_end": "2025-09-27",
+     "fy": 2025,
+     "accession": "0000779544-25-000055"
+    },
+    "operating_income": {
+     "value": "-4064000",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2025-09-27",
+     "fy": 2025,
+     "accession": "0000779544-25-000055"
+    }
+   },
+   "sic": "5812"
+  },
+  {
+   "cik": "0001123596",
+   "name": "BAB, INC.",
+   "revenue_usd": "3439398",
+   "operating_margin": 0.2098,
+   "sources": {
+    "revenue": {
+     "value": "3439398",
+     "concept": "RevenueFromContractWithCustomerIncludingAssessedTax",
+     "period_end": "2025-11-30",
+     "fy": 2025,
+     "accession": "0001437749-26-005227"
+    },
+    "operating_income": {
+     "value": "721632",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2025-11-30",
+     "fy": 2025,
+     "accession": "0001437749-26-005227"
+    },
+    "pretax_income": {
+     "value": "780044",
+     "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "period_end": "2025-11-30",
+     "fy": 2025,
+     "accession": "0001437749-26-005227"
+    },
+    "income_tax": {
+     "value": "221000",
+     "concept": "IncomeTaxExpenseBenefit",
+     "period_end": "2025-11-30",
+     "fy": 2025,
+     "accession": "0001437749-26-005227"
+    }
+   },
+   "effective_tax_rate": 0.2833,
+   "sic": "5812"
+  }
+ ],
+ "median_operating_margin": 0.0428,
+ "median_effective_tax_rate": 0.262,
+ "source": "SEC EDGAR XBRL company facts (10-K, full fiscal years >= 2024)"
+}

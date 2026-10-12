@@ -20,6 +20,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).parent))
 
+try:  # Streamlit Cloud: secrets -> environment, before munshi.config reads it
+    for _k, _v in st.secrets.items():
+        if isinstance(_v, (str, int, float, bool)):
+            os.environ.setdefault(_k, str(_v))
+except Exception:  # no secrets file locally: .env is used instead
+    pass
+
 import ui  # noqa: E402
 from munshi import close, tracing, workspace  # noqa: E402
 from munshi.config import settings  # noqa: E402
@@ -212,8 +219,13 @@ def run_close(office_box, feed_box, previous: dict | None = None, owner_says: st
 
     _tracing()
     out = ROOT / "runs" / f"app-{datetime.now():%Y%m%d-%H%M%S}-{S['slug']}"
-    with tracing.run("munshi-close-app", session_id=f"office-{S['slug']}", end_user_id=S["slug"]):
-        close.close_v2(ws, out, progress=progress, previous=previous)
+    try:
+        with tracing.run("munshi-close-app", session_id=f"office-{S['slug']}", end_user_id=S["slug"]):
+            close.close_v2(ws, out, progress=progress, previous=previous)
+    except Exception as e:  # show it, never fail silently
+        feed_box.empty()
+        st.error(f"The close stopped: {type(e).__name__}: {e}")
+        st.stop()
     for k, *_ in ui.TEAM:
         if states[k] == "working" or previous is None:
             states[k] = "done"

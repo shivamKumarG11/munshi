@@ -1,0 +1,209 @@
+{
+ "industry_sics": [
+  "7311",
+  "8742"
+ ],
+ "peers": [
+  {
+   "cik": "0001576427",
+   "name": "CRITEO S.A.",
+   "revenue_usd": "1944901000",
+   "operating_margin": 0.1043,
+   "sources": {
+    "revenue": {
+     "value": "1944901000",
+     "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001576427-26-000014"
+    },
+    "operating_income": {
+     "value": "202765000",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001576427-26-000014"
+    },
+    "pretax_income": {
+     "value": "203574000",
+     "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001576427-26-000014"
+    },
+    "income_tax": {
+     "value": "54195000",
+     "concept": "IncomeTaxExpenseBenefit",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001576427-26-000014"
+    }
+   },
+   "effective_tax_rate": 0.2662,
+   "sic": "7311"
+  },
+  {
+   "cik": "0001490281",
+   "name": "Groupon, Inc.",
+   "revenue_usd": "498422000",
+   "operating_margin": 0.0474,
+   "sources": {
+    "revenue": {
+     "value": "498422000",
+     "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001628280-26-016429"
+    },
+    "operating_income": {
+     "value": "23640000",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001628280-26-016429"
+    }
+   },
+   "sic": "7311"
+  },
+  {
+   "cik": "0001599407",
+   "name": "1847 HOLDINGS LLC",
+   "revenue_usd": "48272312",
+   "operating_margin": 0.0825,
+   "sources": {
+    "revenue": {
+     "value": "48272312",
+     "concept": "Revenues",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001213900-26-036917"
+    },
+    "operating_income": {
+     "value": "3981712",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001213900-26-036917"
+    },
+    "pretax_income": {
+     "value": "68833957",
+     "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001213900-26-036917"
+    },
+    "income_tax": {
+     "value": "2353000",
+     "concept": "IncomeTaxExpenseBenefit",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001213900-26-036917"
+    }
+   },
+   "effective_tax_rate": 0.0342,
+   "sic": "8742"
+  },
+  {
+   "cik": "0000843006",
+   "name": "ACCESS Newswire Inc.",
+   "revenue_usd": "22619000",
+   "operating_margin": -0.0827,
+   "sources": {
+    "revenue": {
+     "value": "22619000",
+     "concept": "Revenues",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001683168-26-002018"
+    },
+    "operating_income": {
+     "value": "-1871000",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2025-12-31",
+     "fy": 2025,
+     "accession": "0001683168-26-002018"
+    }
+   },
+   "sic": "8742"
+  },
+  {
+   "cik": "0001853044",
+   "name": "Aeries Technology, Inc.",
+   "revenue_usd": "70014000",
+   "operating_margin": 0.0645,
+   "sources": {
+    "revenue": {
+     "value": "70014000",
+     "concept": "Revenues",
+     "period_end": "2026-03-31",
+     "fy": 2026,
+     "accession": "0001829126-26-006123"
+    },
+    "operating_income": {
+     "value": "4518000",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2026-03-31",
+     "fy": 2026,
+     "accession": "0001829126-26-006123"
+    },
+    "pretax_income": {
+     "value": "5465000",
+     "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "period_end": "2026-03-31",
+     "fy": 2026,
+     "accession": "0001829126-26-006123"
+    },
+    "income_tax": {
+     "value": "1991000",
+     "concept": "IncomeTaxExpenseBenefit",
+     "period_end": "2026-03-31",
+     "fy": 2026,
+     "accession": "0001829126-26-006123"
+    }
+   },
+   "effective_tax_rate": 0.3643,
+   "sic": "8742"
+  },
+  {
+   "cik": "0001604738",
+   "name": "ASHFORD INC.",
+   "revenue_usd": "818154000",
+   "operating_margin": 0.0174,
+   "sources": {
+    "revenue": {
+     "value": "818154000",
+     "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+     "period_end": "2024-12-31",
+     "fy": 2024,
+     "accession": "0001604738-25-000004"
+    },
+    "operating_income": {
+     "value": "14242000",
+     "concept": "OperatingIncomeLoss",
+     "period_end": "2024-12-31",
+     "fy": 2024,
+     "accession": "0001604738-25-000004"
+    },
+    "pretax_income": {
+     "value": "2576000",
+     "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "period_end": "2024-12-31",
+     "fy": 2024,
+     "accession": "0001604738-25-000004"
+    },
+    "income_tax": {
+     "value": "6568000",
+     "concept": "IncomeTaxExpenseBenefit",
+     "period_end": "2024-12-31",
+     "fy": 2024,
+     "accession": "0001604738-25-000004"
+    }
+   },
+   "effective_tax_rate": 2.5497,
+   "sic": "8742"
+  }
+ ],
+ "median_operating_margin": 0.0559,
+ "median_effective_tax_rate": 0.2662,
+ "source": "SEC EDGAR XBRL company facts (10-K, full fiscal years >= 2024)"
+}
