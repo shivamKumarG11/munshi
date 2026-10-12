@@ -61,3 +61,17 @@ def _parse_json(text: str) -> dict:
     if start < 0 or end < 0:
         raise ValueError(f"No JSON object in model reply: {text[:200]}")
     return json.loads(text[start : end + 1])
+
+
+def ask_text(role: str, system: str, user: str) -> str:
+    """Plain-text answer (used by the Ask Munshi chat)."""
+    reply = client().chat.completions.create(
+        model=model_for(role),
+        messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
+    )
+    u = usage.setdefault(model_for(role), {"calls": 0, "prompt": 0, "completion": 0})
+    u["calls"] += 1
+    if reply.usage:
+        u["prompt"] += reply.usage.prompt_tokens or 0
+        u["completion"] += reply.usage.completion_tokens or 0
+    return (reply.choices[0].message.content or "").strip()
