@@ -1,0 +1,139 @@
+{
+  "label": "GENERATED demo data: fictional business, vendors and clients",
+  "scenario": "03-arjun-mehta-consulting",
+  "opening_balance": "320000.00",
+  "closing_balance": "525571.00",
+  "expected_tax": {
+    "output_tax_collected": "42254.24",
+    "input_tax_claimable": "5220.00",
+    "net_indirect_tax": "37034.24"
+  },
+  "transactions": [
+    {
+      "bank_txn_id": "A01",
+      "date": "2026-09-01",
+      "narration": "NEFT-BANER HUB COWORKING-BH0926",
+      "amount": "-17700.00",
+      "account": "Expenses:Rent",
+      "tax": "2700.00",
+      "documents": [
+        "baner-hub-sep.pdf"
+      ],
+      "note": null
+    },
+    {
+      "bank_txn_id": "A02",
+      "date": "2026-09-04",
+      "narration": "NEFT CR-SAHYADRI AGRO PVT LTD-AMC015 016",
+      "amount": "177000.00",
+      "account": "Income:Services",
+      "tax": "27000.00",
+      "documents": [],
+      "note": "one payment for two invoices (106,200 + 70,800)"
+    },
+    {
+      "bank_txn_id": "A03",
+      "date": "2026-09-05",
+      "narration": "RZP*FIGMA INC",
+      "amount": "-1150.00",
+      "account": "Expenses:Software",
+      "tax": "0",
+      "documents": [],
+      "note": "cryptic payee (Figma), no bill: not claimable yet"
+    },
+    {
+      "bank_txn_id": "A04",
+      "date": "2026-09-08",
+      "narration": "UPI-PUNE CITY CABS",
+      "amount": "-1240.00",
+      "account": "Expenses:Travel",
+      "tax": "0",
+      "documents": [
+        "cab-receipt-0908.png"
+      ],
+      "note": "blurry cab receipt photo"
+    },
+    {
+      "bank_txn_id": "A05",
+      "date": "2026-09-10",
+      "narration": "UPI-HOTEL SAHYADRI RESIDENCY",
+      "amount": "-6720.00",
+      "account": "Expenses:Travel",
+      "tax": "720.00",
+      "documents": [
+        "hotel-sahyadri-0910.pdf"
+      ],
+      "note": "duplicate: hotel invoice uploaded twice (email + download)"
+    },
+    {
+      "bank_txn_id": "A06",
+      "date": "2026-09-12",
+      "narration": "POS VOHUMAN CAFE",
+      "amount": "-640.00",
+      "account": "Expenses:Meals",
+      "tax": "0",
+      "documents": [
+        "vohuman-client-breakfast.png"
+      ],
+      "note": null
+    },
+    {
+      "bank_txn_id": "A07",
+      "date": "2026-09-15",
+      "narration": "NEFT-KULKARNI AND ASSOCIATES-KA77",
+      "amount": "-11800.00",
+      "account": "Expenses:Professional-Fees",
+      "tax": "1800.00",
+      "documents": [
+        "kulkarni-ca-fees.pdf"
+      ],
+      "note": "vendor arithmetic error: 10,000 + 1,800 GST = 11,800, bill prints 11,880"
+    },
+    {
+      "bank_txn_id": "A08",
+      "date": "2026-09-18",
+      "narration": "ONLINE SHOPPING-HEADPHONES PERSONAL",
+      "amount": "-8999.00",
+      "account": "Equity:Owner-Drawings",
+      "tax": "0",
+      "documents": [],
+      "note": "personal purchase on the business account"
+    },
+    {
+      "bank_txn_id": "A09",
+      "date": "2026-09-22",
+      "narration": "NEFT CR-DECCAN RETAIL PVT LTD-PART AMC014",
+      "amount": "100000.00",
+      "account": "Income:Services",
+      "tax": "15254.24",
+      "documents": [],
+      "note": "partial payment: 100,000 of 177,000 on AMC-2026-014"
+    },
+    {
+      "bank_txn_id": "A10",
+      "date": "2026-09-25",
+      "narration": "GST PMT CHALLAN CPIN 2609250044",
+      "amount": "-24000.00",
+      "account": "Liabilities:Tax:Collected",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "A11",
+      "date": "2026-09-30",
+      "narration": "INT CR SAVINGS",
+      "amount": "820.00",
+      "account": "Income:Interest",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    }
+  ],
+  "late_arrivals": [
+    {
+      "kind": "bank",
+      "what": "Deccan Retail pays the rest of AMC-2026-014 (overdue invoice cleared)"
+    }
+  ]
+}

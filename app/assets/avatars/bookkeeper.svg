@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+<defs><radialGradient id="skin" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#C6A08C"/><stop offset="0.6" stop-color="#A86E4F"/><stop offset="1" stop-color="#6D4733"/></radialGradient><radialGradient id="hair" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#676361"/><stop offset="0.6" stop-color="#16100D"/><stop offset="1" stop-color="#0E0A08"/></radialGradient><radialGradient id="shirt" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ECC27F"/><stop offset="0.6" stop-color="#E2A23B"/><stop offset="1" stop-color="#926926"/></radialGradient><radialGradient id="shadow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="80" cy="152" rx="52" ry="7" fill="url(#shadow)"/>
+<path d="M30 152 Q30 112 80 108 Q130 112 130 152 Z" fill="url(#shirt)"/>
+<path d="M68 108 Q80 120 92 108" fill="#976347"/>
+<rect x="72" y="92" width="16" height="18" rx="6" fill="#8E5D43"/>
+<path d="M50 74 Q48 32 80 28 Q112 32 110 74 L108 96 Q80 104 52 96 Z" fill="url(#hair)"/>
+<ellipse cx="80" cy="70" rx="27" ry="30" fill="url(#skin)"/>
+<ellipse cx="53" cy="72" rx="5" ry="7" fill="#976347"/><ellipse cx="107" cy="72" rx="5" ry="7" fill="#976347"/>
+<path d="M52 66 Q58 34 80 32 Q102 34 108 66 Q92 46 66 52 Z" fill="url(#hair)"/>
+<ellipse cx="69" cy="73" rx="3.2" ry="3.8" fill="#1B1210"/><ellipse cx="91" cy="73" rx="3.2" ry="3.8" fill="#1B1210"/>
+<circle cx="70" cy="72" r="1" fill="#FFFFFF"/><circle cx="92" cy="72" r="1" fill="#FFFFFF"/>
+<ellipse cx="62" cy="84" rx="5" ry="3" fill="#E58C7A" opacity=".45"/><ellipse cx="98" cy="84" rx="5" ry="3" fill="#E58C7A" opacity=".45"/>
+<path d="M72 86 Q80 93 88 86" stroke="#6B2E22" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<g transform="translate(100 114)"><rect width="32" height="26" rx="4" fill="#7A4A1E"/><rect x="3" y="3" width="26" height="20" rx="2" fill="#FFF6E5"/><path d="M8 9h16M8 14h16M8 19h10" stroke="#B98A4C" stroke-width="2"/></g>
+</svg>

@@ -1,0 +1,20 @@
+{
+  "name": "Arjun Mehta Consulting",
+  "address": "Baner Road, Pune 411045",
+  "gstin": "27AAKPM8812C1ZQ",
+  "industry": "Management and data consulting",
+  "peer_sics": [
+    "8742"
+  ],
+  "hourly_rate": "4500.00",
+  "gst_rate": "0.18",
+  "income_tax_provision_rate": "0.30",
+  "payment_terms_days": 30,
+  "non_claimable_tax_accounts": [
+    "Expenses:Meals"
+  ],
+  "client_emails": {
+    "Deccan Retail Pvt Ltd": "finance@deccanretail.example",
+    "Sahyadri Agro Pvt Ltd": "accounts@sahyadriagro.example"
+  }
+}

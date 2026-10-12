@@ -1,0 +1,17 @@
+{
+  "name": "Filter Kaapi House",
+  "address": "12 East Mada Street, Mylapore, Chennai 600004",
+  "gstin": "33AAKFF2210B1Z7",
+  "industry": "Caf\u00e9 / quick-service restaurant",
+  "peer_sics": [
+    "5812"
+  ],
+  "hourly_rate": "0",
+  "gst_rate": "0.05",
+  "sales_tax_inclusive": true,
+  "input_credit_allowed": false,
+  "income_tax_provision_rate": "0.25",
+  "payment_terms_days": 15,
+  "non_claimable_tax_accounts": [],
+  "client_emails": {}
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+<defs><radialGradient id="skin" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#D8AF99"/><stop offset="0.6" stop-color="#C48563"/><stop offset="1" stop-color="#7F5640"/></radialGradient><radialGradient id="hair" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#7E706A"/><stop offset="0.6" stop-color="#3A231A"/><stop offset="1" stop-color="#251610"/></radialGradient><radialGradient id="shirt" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#BE9EE5"/><stop offset="0.6" stop-color="#9B6BD8"/><stop offset="1" stop-color="#64458C"/></radialGradient><radialGradient id="shadow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="80" cy="152" rx="52" ry="7" fill="url(#shadow)"/>
+<path d="M30 152 Q30 112 80 108 Q130 112 130 152 Z" fill="url(#shirt)"/>
+<path d="M68 108 Q80 120 92 108" fill="#B07759"/>
+<rect x="72" y="92" width="16" height="18" rx="6" fill="#A67154"/>
+<path d="M50 72 Q48 30 80 26 Q112 30 110 72 L114 118 Q100 108 96 92 L64 92 Q60 108 46 118 Z" fill="url(#hair)"/>
+<ellipse cx="80" cy="70" rx="27" ry="30" fill="url(#skin)"/>
+<ellipse cx="53" cy="72" rx="5" ry="7" fill="#B07759"/><ellipse cx="107" cy="72" rx="5" ry="7" fill="#B07759"/>
+<path d="M52 66 Q56 34 80 32 Q104 34 108 66 Q96 50 80 48 Q64 50 52 66 Z" fill="url(#hair)"/>
+<ellipse cx="69" cy="73" rx="3.2" ry="3.8" fill="#1B1210"/><ellipse cx="91" cy="73" rx="3.2" ry="3.8" fill="#1B1210"/>
+<circle cx="70" cy="72" r="1" fill="#FFFFFF"/><circle cx="92" cy="72" r="1" fill="#FFFFFF"/>
+<ellipse cx="62" cy="84" rx="5" ry="3" fill="#E58C7A" opacity=".45"/><ellipse cx="98" cy="84" rx="5" ry="3" fill="#E58C7A" opacity=".45"/>
+<path d="M72 86 Q80 93 88 86" stroke="#6B2E22" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<g transform="translate(100 118)"><rect width="34" height="22" rx="4" fill="#1E2B26"/><rect y="5" width="34" height="5" fill="#4FD18B"/><rect x="4" y="14" width="10" height="4" rx="1" fill="#C9D4CE"/></g>
+</svg>

@@ -12,7 +12,8 @@ from munshi.integrations import crustdata
 from munshi.models import BankTxn, Document, Entry
 
 ACCOUNTS = [
-    "Income:Services", "Income:Interest",
+    "Income:Services", "Income:Sales", "Income:Interest",
+    "Expenses:Ingredients", "Expenses:Packaging", "Expenses:Repairs",
     "Expenses:Rent", "Expenses:Salaries", "Expenses:Contractors", "Expenses:Software", "Expenses:Hosting",
     "Expenses:Internet", "Expenses:Utilities", "Expenses:Office-Supplies", "Expenses:Meals", "Expenses:Travel",
     "Expenses:Printing", "Expenses:Marketing", "Expenses:Bank-Charges", "Expenses:Professional-Fees",
@@ -26,6 +27,7 @@ RULES = [
     (r"GST PMT|GST CHALLAN|CPIN", "Liabilities:Tax:Collected", "rule:gst-payment"),
     (r"CHGS|CHARGES|SMS ALERT", "Expenses:Bank-Charges", "rule:bank-charges"),
     (r"^INT CR|INTEREST", "Income:Interest", "rule:interest"),
+    (r"POS SETTLEMENT|CARD SETTLEMENT|UPI SETTLEMENT", "Income:Sales", "rule:sales-settlement"),
 ]
 
 
@@ -81,7 +83,7 @@ def categorise(txn: BankTxn, doc: Document | None, vendor_error: bool, earlier: 
                          f"Vendor: {doc.party}\nLines: {lines}\nBank narration: {txn.description}")
         account = _valid(r.get("account", ""))
         tax = Decimal("0")
-        if doc.tax and account not in non_claimable:
+        if doc.tax and account not in non_claimable and "*" not in non_claimable:
             tax = doc.tax
         note = r.get("reason", "")
         if vendor_error:

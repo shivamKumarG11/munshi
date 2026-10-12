@@ -1,0 +1,213 @@
+{
+  "label": "GENERATED demo data: fictional business, vendors and clients",
+  "scenario": "02-filter-kaapi-house",
+  "opening_balance": "185000.00",
+  "closing_balance": "203762.00",
+  "expected_tax": {
+    "output_tax_collected": "8690.00",
+    "input_tax_claimable": "0",
+    "net_indirect_tax": "8690.00"
+  },
+  "transactions": [
+    {
+      "bank_txn_id": "C01",
+      "date": "2026-09-01",
+      "narration": "NEFT-MADA STREET PROPERTIES-RENT SEP",
+      "amount": "-47200.00",
+      "account": "Expenses:Rent",
+      "tax": "0",
+      "documents": [
+        "mada-street-rent-sep.pdf"
+      ],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C02",
+      "date": "2026-09-02",
+      "narration": "POS SETTLEMENT HDFC MID 88213",
+      "amount": "38640.00",
+      "account": "Income:Sales",
+      "tax": "1840.00",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C03",
+      "date": "2026-09-03",
+      "narration": "UPI-NILA DAIRY FARMS-ND4471",
+      "amount": "-12600.00",
+      "account": "Expenses:Ingredients",
+      "tax": "0",
+      "documents": [
+        "nila-dairy-0903.pdf"
+      ],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C04",
+      "date": "2026-09-04",
+      "narration": "SAL SEP-SELVI K",
+      "amount": "-18000.00",
+      "account": "Expenses:Salaries",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C05",
+      "date": "2026-09-04",
+      "narration": "SAL SEP-RAMESH P",
+      "amount": "-16000.00",
+      "account": "Expenses:Salaries",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C06",
+      "date": "2026-09-06",
+      "narration": "UPI-CHIKMAGALUR BEAN CO-CBC921",
+      "amount": "-14700.00",
+      "account": "Expenses:Ingredients",
+      "tax": "0",
+      "documents": [
+        "chikmagalur-beans-0906.pdf"
+      ],
+      "note": "duplicate bill: the same beans bill was also forwarded on WhatsApp and uploaded twice"
+    },
+    {
+      "bank_txn_id": "C07",
+      "date": "2026-09-08",
+      "narration": "ATM WDL MYLAPORE",
+      "amount": "-6000.00",
+      "account": "Expenses:Ingredients",
+      "tax": "0",
+      "documents": [],
+      "note": "cash withdrawal: owner confirms it was for vegetables (petty cash)"
+    },
+    {
+      "bank_txn_id": "C08",
+      "date": "2026-09-09",
+      "narration": "POS SETTLEMENT HDFC MID 88213",
+      "amount": "52500.00",
+      "account": "Income:Sales",
+      "tax": "2500.00",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C09",
+      "date": "2026-09-11",
+      "narration": "UPI-GREENLEAF PACKAGING-GL331",
+      "amount": "-8400.00",
+      "account": "Expenses:Packaging",
+      "tax": "0",
+      "documents": [
+        "greenleaf-packaging-0911.pdf"
+      ],
+      "note": "vendor arithmetic error: 5,000 + 2,500 + 900 GST = 8,400, but the bill prints 8,600"
+    },
+    {
+      "bank_txn_id": "C10",
+      "date": "2026-09-13",
+      "narration": "UPI-SRI MURUGAN GAS AGENCY",
+      "amount": "-3780.00",
+      "account": "Expenses:Utilities",
+      "tax": "0",
+      "documents": [
+        "gas-cylinder-receipt.png"
+      ],
+      "note": "blurry phone photo of the gas receipt"
+    },
+    {
+      "bank_txn_id": "C11",
+      "date": "2026-09-15",
+      "narration": "TNEB-ELECTRICITY 0412 SEP",
+      "amount": "-9850.00",
+      "account": "Expenses:Utilities",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C12",
+      "date": "2026-09-16",
+      "narration": "POS SETTLEMENT HDFC MID 88213",
+      "amount": "47250.00",
+      "account": "Income:Sales",
+      "tax": "2250.00",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C13",
+      "date": "2026-09-18",
+      "narration": "RZP*CANVA PTY LTD",
+      "amount": "-499.00",
+      "account": "Expenses:Marketing",
+      "tax": "0",
+      "documents": [],
+      "note": "cryptic payee (Canva) with no bill: menu design subscription, not claimable without a bill"
+    },
+    {
+      "bank_txn_id": "C14",
+      "date": "2026-09-20",
+      "narration": "IMPS-COOLTECH APPLIANCE CARE",
+      "amount": "-5900.00",
+      "account": "Expenses:Repairs",
+      "tax": "0",
+      "documents": [],
+      "note": "fridge repair paid, bill not yet received (arrives late)"
+    },
+    {
+      "bank_txn_id": "C15",
+      "date": "2026-09-22",
+      "narration": "RFND NILA DAIRY FARMS-SOUR BATCH",
+      "amount": "1260.00",
+      "account": "Expenses:Ingredients",
+      "tax": "0",
+      "documents": [],
+      "note": "supplier refund for a sour milk batch: reduces ingredient cost, not income"
+    },
+    {
+      "bank_txn_id": "C16",
+      "date": "2026-09-23",
+      "narration": "UPI-ST JOHNS SCHOOL FEES",
+      "amount": "-22000.00",
+      "account": "Equity:Owner-Drawings",
+      "tax": "0",
+      "documents": [],
+      "note": "personal: owner's child's school fees paid from the business account"
+    },
+    {
+      "bank_txn_id": "C17",
+      "date": "2026-09-26",
+      "narration": "POS SETTLEMENT HDFC MID 88213",
+      "amount": "44100.00",
+      "account": "Income:Sales",
+      "tax": "2100.00",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "C18",
+      "date": "2026-09-30",
+      "narration": "SMS ALERT CHGS SEP",
+      "amount": "-59.00",
+      "account": "Expenses:Bank-Charges",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    }
+  ],
+  "late_arrivals": [
+    {
+      "kind": "doc",
+      "what": "The CoolTech fridge-repair bill finally arrives (matches C14)"
+    },
+    {
+      "kind": "bank",
+      "what": "A late card settlement for 29-30 Sep lands on the statement"
+    }
+  ]
+}

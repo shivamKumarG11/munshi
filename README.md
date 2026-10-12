@@ -8,6 +8,28 @@ Built solo for [neatHack](https://neatlogs.com/hackathon) (Oct 10–12, 2026) ·
 
 ---
 
+## Try it in 3 steps (the app)
+`uv run streamlit run app/streamlit_app.py`
+
+1. **Your month:** pick one of three sample businesses (design studio, café, solo consultant) or upload your own
+   files. Everything you gave is shown by category (bank lines, bills, receipt photos, invoices sent, timesheet).
+2. **The office:** the owner (Kavya) hands the month to six AI workers: Riya (Researcher), Arjun (Reader),
+   Meena (Bookkeeper), Dev (Auditor), Sana (Collector), Kabir (Briefer). Watch them work live, approve their drafts,
+   ask questions. **Drop a new file at any time** (e.g. a bill that arrived late): Munshi remembers everything
+   it already did, processes only what's new, and tells you exactly what changed.
+3. **Books & proof:** every entry with the reason behind it, plus the before/after evidence.
+
+## Sample businesses (`samples/`)
+| Scenario | Business | What's tricky | Late arrivals (`late/`) |
+| --- | --- | --- | --- |
+| `01-studio-kaveri` | Design studio, Bengaluru | 12 planted traps (the evidence month) | R. Sharma's invoice; Orbit pays the overdue invoice |
+| `02-filter-kaapi-house` | Café, Chennai | Card settlements at 5% GST, no input credit, WhatsApp duplicate, vendor error, school fees from the business account | Fridge-repair bill; a late card settlement |
+| `03-arjun-mehta-consulting` | Solo consultant, Pune | One payment for two invoices, partial payment, duplicate hotel invoice, CA fee error, personal purchase | Client pays the balance |
+
+Each has a bank statement, bills (PDF), receipt photos, invoice/timesheet sheets, owner answers, an answer key and a
+README. All generated and fictional (`scripts/generate_samples.py`). Results on all three: books balance to ₹0, GST
+exact; categorisation 100% / 89% / 100%. Adding the late files costs 0 to 2 model calls.
+
 ## What it does
 You drop in a month: a bank statement, a pile of bills and receipt photos, the invoices you sent, a timesheet. Munshi closes the month like a careful accountant:
 

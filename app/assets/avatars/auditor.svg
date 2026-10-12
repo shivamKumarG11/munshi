@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+<defs><radialGradient id="skin" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#B69381"/><stop offset="0.6" stop-color="#8F5A3E"/><stop offset="1" stop-color="#5C3A28"/></radialGradient><radialGradient id="hair" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#64615F"/><stop offset="0.6" stop-color="#110C0A"/><stop offset="1" stop-color="#0B0706"/></radialGradient><radialGradient id="shirt" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#EC9E8D"/><stop offset="0.6" stop-color="#E36A50"/><stop offset="1" stop-color="#934434"/></radialGradient><radialGradient id="shadow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="80" cy="152" rx="52" ry="7" fill="url(#shadow)"/>
+<path d="M30 152 Q30 112 80 108 Q130 112 130 152 Z" fill="url(#shirt)"/>
+<path d="M68 108 Q80 120 92 108" fill="#805137"/>
+<rect x="72" y="92" width="16" height="18" rx="6" fill="#794C34"/>
+
+<ellipse cx="80" cy="70" rx="27" ry="30" fill="url(#skin)"/>
+<ellipse cx="53" cy="72" rx="5" ry="7" fill="#805137"/><ellipse cx="107" cy="72" rx="5" ry="7" fill="#805137"/>
+<path d="M53 62 Q56 34 80 32 Q104 34 107 62 Q100 48 80 46 Q60 48 53 62 Z" fill="url(#hair)"/>
+<ellipse cx="69" cy="73" rx="3.2" ry="3.8" fill="#1B1210"/><ellipse cx="91" cy="73" rx="3.2" ry="3.8" fill="#1B1210"/>
+<circle cx="70" cy="72" r="1" fill="#FFFFFF"/><circle cx="92" cy="72" r="1" fill="#FFFFFF"/>
+<ellipse cx="62" cy="84" rx="5" ry="3" fill="#E58C7A" opacity=".45"/><ellipse cx="98" cy="84" rx="5" ry="3" fill="#E58C7A" opacity=".45"/>
+<path d="M72 86 Q80 93 88 86" stroke="#6B2E22" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<g transform="translate(100 108)" stroke="#5A3A12" stroke-width="3" fill="none"><path d="M16 0v30M2 8h28"/><path d="M2 8 l-5 12 h10 z" fill="#F2B84B"/><path d="M30 8 l-5 12 h10 z" fill="#F2B84B"/><path d="M8 32h16"/></g>
+</svg>

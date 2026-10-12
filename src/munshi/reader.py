@@ -37,6 +37,7 @@ class ReadResult(BaseModel):
     model_role: str              # which model produced the final reading
     vendor_error: bool = False   # both models agree on numbers that don't add up
     content_hash: str            # identical files share a hash (duplicate uploads)
+    remembered: bool = False     # answered from memory (file seen before)
 
 
 def _dec(value) -> Decimal | None:
@@ -117,9 +118,25 @@ def _render_pdf(path: Path) -> list[Path]:
     return out
 
 
-@tracing.span("AGENT", name="read_document")
+CACHE_DIR = Path(__file__).resolve().parents[2] / "state" / "reads"
+
+
 def read(path: Path, doc_id: str, kind: str = "bill") -> ReadResult:
+    """Read a document once; identical files (same bytes) are answered from memory."""
     content_hash = hashlib.sha256(path.read_bytes()).hexdigest()[:16]
+    cached = CACHE_DIR / f"{content_hash}.json"
+    if cached.exists():
+        r = ReadResult.model_validate_json(cached.read_text(encoding="utf-8"))
+        doc = r.document.model_copy(update={"id": doc_id, "kind": kind, "source": str(path).replace("\\", "/")})
+        return r.model_copy(update={"document": doc, "remembered": True})
+    result = _read(path, doc_id, kind, content_hash)
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    cached.write_text(result.model_dump_json(), encoding="utf-8")
+    return result
+
+
+@tracing.span("AGENT", name="read_document")
+def _read(path: Path, doc_id: str, kind: str, content_hash: str) -> ReadResult:
     doc = _to_document(_extract(path, "cheap"), doc_id, kind, path)
     issues = check(doc)
     if not issues:

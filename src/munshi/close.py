@@ -36,22 +36,68 @@ def _noop(step: str, message: str, data: dict | None = None) -> None:
 def load_month(month_dir: Path) -> dict:
     biz = json.loads((month_dir / "business.json").read_text(encoding="utf-8"))
     issued = []
-    with open(month_dir / "invoices_issued.csv", encoding="utf-8") as f:
-        for r in csv.DictReader(f):
-            issued.append(IssuedInvoice(number=r["number"], client=r["client"], date=date.fromisoformat(r["date"]),
-                                        subtotal=Decimal(r["subtotal"]), tax=Decimal(r["tax"]), total=Decimal(r["total"])))
-    with open(month_dir / "timesheet.csv", encoding="utf-8") as f:
-        timesheet = list(csv.DictReader(f))
+    if (month_dir / "invoices_issued.csv").exists():
+        with open(month_dir / "invoices_issued.csv", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                issued.append(IssuedInvoice(number=r["number"], client=r["client"], date=date.fromisoformat(r["date"]),
+                                            subtotal=Decimal(r["subtotal"]), tax=Decimal(r["tax"]), total=Decimal(r["total"])))
+    timesheet = []
+    if (month_dir / "timesheet.csv").exists():
+        with open(month_dir / "timesheet.csv", encoding="utf-8") as f:
+            timesheet = list(csv.DictReader(f))
     answers_path = month_dir / "owner_answers.json"
     return {
         "business": biz,
-        "bank": bankmod.parse(month_dir / "bank_statement.csv"),
+        "bank": load_bank(month_dir),
         "issued": issued,
         "timesheet": timesheet,
         "owner_answers": json.loads(answers_path.read_text(encoding="utf-8")) if answers_path.exists() else {},
         "doc_files": sorted(p for p in (month_dir / "documents").iterdir()
                             if p.suffix.lower() in {".pdf", ".png", ".jpg", ".jpeg"} and ".page" not in p.name),
     }
+
+
+def load_bank(month_dir: Path):
+    """The statement plus any addendum files that arrived later (bank_statement*.csv), checked for continuity."""
+    rows = []
+    for path in sorted(month_dir.glob("bank_statement*.csv"), key=lambda p: (p.stem != "bank_statement", p.name)):
+        part = bankmod.parse(path)
+        if rows and part and rows[-1].balance is not None and part[0].balance is not None \
+                and rows[-1].balance + part[0].amount != part[0].balance:
+            raise ValueError(f"{path.name} doesn't continue from the previous statement balance")
+        seen = {r.id for r in rows}
+        rows += [r for r in part if r.id not in seen]
+    return rows
+
+
+def _slug(name: str) -> str:
+    return re.sub(r"\W+", "-", name.lower()).strip("-")
+
+
+# --------------------------------------------------------------------------- memory (incremental closes)
+
+MEMORY = ROOT / "state" / "memory"
+
+
+def _mem_load(biz: dict) -> dict:
+    path = MEMORY / f"{_slug(biz['name'])}.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"categorised": {}}
+
+
+def _mem_save(biz: dict, mem: dict) -> None:
+    MEMORY.mkdir(parents=True, exist_ok=True)
+    (MEMORY / f"{_slug(biz['name'])}.json").write_text(json.dumps(mem, indent=1, default=str), encoding="utf-8")
+
+
+def _categorise_remembered(mem, txn, doc, doc_hash, vendor_error, entries, answers, non_claimable):
+    """Re-use an earlier decision for the same bank line + same evidence; only new things go to the model."""
+    key = f"{txn.id}|{txn.description}|{txn.amount}|{doc_hash or ''}|{vendor_error}"
+    hit = mem["categorised"].get(key)
+    if hit:
+        return Entry(**{**hit["entry"], "date": txn.date}), hit.get("question"), True
+    e, q = categoriser.categorise(txn, doc, vendor_error, entries, answers, non_claimable)
+    mem["categorised"][key] = {"entry": e.model_dump(mode="json"), "question": q.model_dump() if q else None}
+    return e, (q.model_dump() if q else None), False
 
 
 # --------------------------------------------------------------------------- bill entry
@@ -74,13 +120,16 @@ def _bank_line_for_bill(doc: Document, bank: list[BankTxn]) -> BankTxn | None:
 
 @tracing.span("WORKFLOW", name="munshi_close_v2")
 def close_v2(month_dir: Path, out_dir: Path, progress: Progress = _noop, live_actions: bool = False,
-             with_peers: bool = True) -> dict:
+             with_peers: bool = True, previous: dict | None = None) -> dict:
     t0 = time.time()
     m = load_month(month_dir)
     biz, bank = m["business"], m["bank"]
     opening, closing = bankmod.opening_balance(bank), bankmod.closing_balance(bank)
     period_start, period_end = bank[0].date.replace(day=1), _month_end(bank[0].date)
     non_claimable = set(biz.get("non_claimable_tax_accounts", []))
+    if biz.get("input_credit_allowed") is False:
+        non_claimable.add("*")
+    mem = _mem_load(biz)
     progress("plan", f"{len(bank)} bank lines, {len(m['doc_files'])} documents, {len(m['issued'])} issued invoices",
              {"opening": str(opening), "closing": str(closing)})
 
@@ -95,9 +144,10 @@ def close_v2(month_dir: Path, out_dir: Path, progress: Progress = _noop, live_ac
     # 1. Read documents (cheap first, code checks, strong re-read on failure)
     docs, hashes, reads = [], {}, {}
     for i, path in enumerate(m["doc_files"], start=1):
-        r = reader.read(path, f"D{i:02d}", kind="receipt" if path.suffix.lower() != ".pdf" else "bill")
+        r = reader.read(path, path.name, kind="receipt" if path.suffix.lower() != ".pdf" else "bill")
         docs.append(r.document); hashes[r.document.id] = r.content_hash; reads[r.document.id] = r
         flag = " ⚠ vendor error" if r.vendor_error else (" (re-read with strong model)" if r.model_role == "strong" else "")
+        flag += " (remembered)" if getattr(r, "remembered", False) else ""
         progress("read", f"{path.name}: {r.document.party} ₹{r.document.total}{flag}")
     correct_totals = {d.id: (d.subtotal + d.tax) if reads[d.id].vendor_error and d.subtotal is not None else d.total
                       for d in docs}
@@ -115,7 +165,8 @@ def close_v2(month_dir: Path, out_dir: Path, progress: Progress = _noop, live_ac
         txn = _bank_line_for_bill(doc, bank)
         if txn is None:
             continue
-        e, _ = categoriser.categorise(txn, doc, reads[doc.id].vendor_error, entries, {}, non_claimable)
+        e, _, _ = _categorise_remembered(mem, txn, doc, hashes[doc.id], reads[doc.id].vendor_error, entries, {},
+                                         non_claimable)
         e = e.model_copy(update={"amount": -doc.total})  # recorded at the bill's printed total
         entries.append(e)
     progress("post", f"Entered {len(entries)} bills")
@@ -130,11 +181,13 @@ def close_v2(month_dir: Path, out_dir: Path, progress: Progress = _noop, live_ac
             entries.append(categoriser.income_entry(txn, p.invoices, p.tax, p.partial))
             progress("post", f"{txn.id} client payment → {', '.join(p.invoices)}" + (" (partial)" if p.partial else ""))
             continue
-        e, q = categoriser.categorise(txn, None, False, entries, m["owner_answers"], non_claimable)
+        e, q, remembered = _categorise_remembered(mem, txn, None, None, False, entries, m["owner_answers"], non_claimable)
+        e = _sales_tax(e, biz)
         entries.append(e)
         if q:
-            questions.append(q.model_dump())
-        progress("post", f"{txn.id} {txn.description[:40]} → {e.account} ({e.decided_by})")
+            questions.append(q)
+        progress("post", f"{txn.id} {txn.description[:40]} → {e.account}"
+                 + (" (remembered)" if remembered else f" ({e.decided_by})"))
 
     # 5. Verify against the bank; hunt and repair gaps until the books balance
     def verify(es):
@@ -155,8 +208,8 @@ def close_v2(month_dir: Path, out_dir: Path, progress: Progress = _noop, live_ac
         entries = ledger.repair(entries, gaps, bank)
         for g in (g for g in gaps if g.kind == "missing_post"):
             txn = next(t for t in bank if t.id == g.bank_txn_id)
-            e, q = categoriser.categorise(txn, None, False, entries, m["owner_answers"], non_claimable)
-            entries.append(e)
+            e, q, _ = _categorise_remembered(mem, txn, None, None, False, entries, m["owner_answers"], non_claimable)
+            entries.append(_sales_tax(e, biz))
         text, result = verify(entries)
     progress("verify", "✅ Books balance to the bank: ₹0 difference" if result.ok and result.bank_gap == 0
              else f"✗ Still off by ₹{result.bank_gap}; escalating to a human", {"gap": str(result.bank_gap)})
@@ -169,6 +222,11 @@ def close_v2(month_dir: Path, out_dir: Path, progress: Progress = _noop, live_ac
     brief = _brief_v2(biz, period_end, facts)
     progress("brief", "Morning brief ready")
 
+    _mem_save(biz, mem)
+    if previous:
+        facts["changes"] = diff(previous, entries, facts, actions)
+        for c in facts["changes"]:
+            progress("update", c)
     out = _save(out_dir, "v2", text, entries, facts, brief, actions, m, period_end, t0)
     _commit_books(biz, period_end, text, facts)
     return out
@@ -194,8 +252,45 @@ def _explain_gap(g, entries, mr, reads, by_doc) -> str:
     return "entry points at a bank line that doesn't exist; removing it"
 
 
+def _sales_tax(e: Entry, biz: dict) -> Entry:
+    """Shop/café sales settle tax-inclusive: carve the output tax out of the receipt at the configured rate."""
+    if e.account == "Income:Sales" and e.amount > 0 and biz.get("sales_tax_inclusive") and not e.tax:
+        rate = Decimal(biz.get("gst_rate", "0"))
+        return e.model_copy(update={"tax": (e.amount * rate / (1 + rate)).quantize(Decimal("0.01"))})
+    return e
+
+
+def diff(previous: dict, entries: list[Entry], facts: dict, actions: dict) -> list[str]:
+    """Plain-language list of what changed since the previous close of this month."""
+    changes = []
+    prev_entries = {e["bank_txn_id"]: e for e in previous["entries"]}
+    for e in entries:
+        old = prev_entries.get(e.bank_txn_id)
+        if old is None:
+            changes.append(f"New bank line {e.bank_txn_id} ({e.payee[:34]}, {_inr(e.amount)}) booked as "
+                           f"{e.account.split(':')[-1]}")
+        elif old["document_ids"] != e.document_ids and e.document_ids:
+            changes.append(f"{e.bank_txn_id} now has its bill ({', '.join(e.document_ids)})")
+        elif old["account"] != e.account:
+            changes.append(f"{e.bank_txn_id} moved from {old['account'].split(':')[-1]} to {e.account.split(':')[-1]}")
+    pa, pf = previous["actions"], previous["facts"]
+    for r in pa.get("reminders", []):
+        if r["invoice"] not in {x["invoice"] for x in actions["reminders"]}:
+            changes.append(f"{r['client']} paid {r['invoice']}: reminder no longer needed")
+    for mb in pa.get("missing_bills", []):
+        if mb["bank_txn_id"] not in {x["bank_txn_id"] for x in actions["missing_bills"]}:
+            changes.append(f"Missing bill for {mb['bank_txn_id']} resolved")
+    for key, label in [("set_aside", "Tax to set aside"), ("profit", "Profit"), ("input_tax_claimable", "Claimable tax")]:
+        a, b = Decimal(pf["tax"][key]), Decimal(facts["tax"][key])
+        if a != b:
+            changes.append(f"{label}: {_inr(a)} → {_inr(b)}")
+    if pf.get("balanced") != facts.get("balanced"):
+        changes.append("Books now balance to the bank" if facts["balanced"] else "Books no longer balance: needs a look")
+    return changes or ["Nothing changed in the books"]
+
+
 def _tax(entries: list[Entry], biz: dict) -> dict:
-    output = sum((e.tax for e in entries if e.account == "Income:Services"), Decimal("0"))
+    output = sum((e.tax for e in entries if e.account in ("Income:Services", "Income:Sales")), Decimal("0"))
     input_ = sum((e.tax for e in entries if e.amount < 0), Decimal("0"))
     income = sum((-(e.amount - e.tax) * -1 for e in entries if e.account.startswith("Income")), Decimal("0"))
     expenses = sum((-(e.amount) - e.tax for e in entries if e.account.startswith("Expenses")), Decimal("0"))

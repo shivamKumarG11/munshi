@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+<defs><radialGradient id="skin" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#CBA490"/><stop offset="0.6" stop-color="#B07455"/><stop offset="1" stop-color="#724B37"/></radialGradient><radialGradient id="hair" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#6D6764"/><stop offset="0.6" stop-color="#1F1612"/><stop offset="1" stop-color="#140E0B"/></radialGradient><radialGradient id="shirt" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#77C0CB"/><stop offset="0.6" stop-color="#2F9FB0"/><stop offset="1" stop-color="#1E6772"/></radialGradient><radialGradient id="shadow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="80" cy="152" rx="52" ry="7" fill="url(#shadow)"/>
+<path d="M30 152 Q30 112 80 108 Q130 112 130 152 Z" fill="url(#shirt)"/>
+<path d="M68 108 Q80 120 92 108" fill="#9E684C"/>
+<rect x="72" y="92" width="16" height="18" rx="6" fill="#956248"/>
+
+<ellipse cx="80" cy="70" rx="27" ry="30" fill="url(#skin)"/>
+<ellipse cx="53" cy="72" rx="5" ry="7" fill="#9E684C"/><ellipse cx="107" cy="72" rx="5" ry="7" fill="#9E684C"/>
+<circle cx="58" cy="50" r="10" fill="url(#hair)"/><circle cx="68" cy="40" r="10" fill="url(#hair)"/><circle cx="80" cy="36" r="10" fill="url(#hair)"/><circle cx="92" cy="40" r="10" fill="url(#hair)"/><circle cx="102" cy="50" r="10" fill="url(#hair)"/><circle cx="62" cy="46" r="10" fill="url(#hair)"/><circle cx="98" cy="46" r="10" fill="url(#hair)"/>
+<ellipse cx="69" cy="73" rx="3.2" ry="3.8" fill="#1B1210"/><ellipse cx="91" cy="73" rx="3.2" ry="3.8" fill="#1B1210"/>
+<circle cx="70" cy="72" r="1" fill="#FFFFFF"/><circle cx="92" cy="72" r="1" fill="#FFFFFF"/>
+<ellipse cx="62" cy="84" rx="5" ry="3" fill="#E58C7A" opacity=".45"/><ellipse cx="98" cy="84" rx="5" ry="3" fill="#E58C7A" opacity=".45"/>
+<path d="M72 86 Q80 93 88 86" stroke="#6B2E22" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<g transform="translate(102 110)"><rect width="28" height="34" rx="4" fill="#8A5A2B"/><rect x="3" y="5" width="22" height="26" rx="2" fill="#FFFFFF"/><rect x="9" y="1" width="10" height="7" rx="2" fill="#C9D4CE"/><path d="M7 15h14M7 20h14M7 25h8" stroke="#9AA7A0" stroke-width="2"/></g>
+</svg>

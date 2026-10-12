@@ -4,3 +4,5 @@
 *.jpg binary
 *.parquet binary
 *.zip binary
+
+*.svg binary

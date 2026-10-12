@@ -1,0 +1,404 @@
+{
+  "label": "GENERATED demo data: fictional business, vendors and clients",
+  "business": {
+    "name": "Studio Kaveri Design LLP",
+    "gstin": "29ABCFS1234K1Z5",
+    "address": "3rd Floor, 80 Feet Road, Koramangala, Bengaluru 560034",
+    "bank": "HDFC Bank current account XX4421"
+  },
+  "period": {
+    "start": "2026-09-01",
+    "end": "2026-09-30"
+  },
+  "opening_balance": "650000.00",
+  "closing_balance": "726735.18",
+  "tax_assumptions": {
+    "gst_rate": "0.18",
+    "income_tax_provision_rate": "0.25",
+    "note": "Meals GST not claimable; foreign SaaS without GSTIN: no input credit"
+  },
+  "expected_tax": {
+    "output_tax_collected": "61627.12",
+    "input_tax_claimable": "11609.82",
+    "net_indirect_tax": "50017.30"
+  },
+  "transactions": [
+    {
+      "bank_txn_id": "B01",
+      "date": "2026-09-01",
+      "narration": "NEFT-KORAMANGALA WORKSPACES LLP-KW2026 0912",
+      "amount": "-59000.00",
+      "account": "Expenses:Rent",
+      "tax": "9000.00",
+      "documents": [
+        "D01"
+      ],
+      "note": null
+    },
+    {
+      "bank_txn_id": "B02",
+      "date": "2026-09-02",
+      "narration": "NEFT CR-ACME RETAIL PVT LTD-INV KAV-2026-031",
+      "amount": "118000.00",
+      "account": "Income:Services",
+      "tax": "18000.00",
+      "documents": [],
+      "note": "invoice KAV-2026-031 paid in full"
+    },
+    {
+      "bank_txn_id": "B03",
+      "date": "2026-09-03",
+      "narration": "SAL SEP-ANANYA RAO",
+      "amount": "-72000.00",
+      "account": "Expenses:Salaries",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "B04",
+      "date": "2026-09-03",
+      "narration": "SAL SEP-VIKRAM NAIR",
+      "amount": "-65000.00",
+      "account": "Expenses:Salaries",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "B05",
+      "date": "2026-09-03",
+      "narration": "SAL SEP-MEERA IYER",
+      "amount": "-58000.00",
+      "account": "Expenses:Salaries",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "B06",
+      "date": "2026-09-04",
+      "narration": "SKYLINE FIBERNET AUTOPAY SFN88213",
+      "amount": "-2358.82",
+      "account": "Expenses:Internet",
+      "tax": "359.82",
+      "documents": [
+        "D02"
+      ],
+      "note": null
+    },
+    {
+      "bank_txn_id": "B07",
+      "date": "2026-09-06",
+      "narration": "UPI-CLOUDNEST HOSTING-CNINV20419",
+      "amount": "-8850.00",
+      "account": "Expenses:Hosting",
+      "tax": "1350.00",
+      "documents": [
+        "D03"
+      ],
+      "note": "TRAP 1: D04 is a duplicate upload of D03"
+    },
+    {
+      "bank_txn_id": "B08",
+      "date": "2026-09-08",
+      "narration": "RZP*NOTION LABS 88213",
+      "amount": "-2950.00",
+      "account": "Expenses:Software",
+      "tax": "0",
+      "documents": [],
+      "note": "TRAP 2+6: cryptic payee (Notion) and no bill: not claimable yet"
+    },
+    {
+      "bank_txn_id": "B09",
+      "date": "2026-09-09",
+      "narration": "POS INTL PIXELFORGE PTE SINGAPORE",
+      "amount": "-2950.00",
+      "account": "Expenses:Software",
+      "tax": "0",
+      "documents": [
+        "D06"
+      ],
+      "note": null
+    },
+    {
+      "bank_txn_id": "B10",
+      "date": "2026-09-10",
+      "narration": "GST PMT CHALLAN CPIN 2608290012",
+      "amount": "-31000.00",
+      "account": "Liabilities:Tax:Collected",
+      "tax": "0",
+      "documents": [],
+      "note": "August GST paid to government"
+    },
+    {
+      "bank_txn_id": "B11",
+      "date": "2026-09-11",
+      "narration": "IMPS-R SHARMA-ILLUSTRATIONS",
+      "amount": "-12000.00",
+      "account": "Expenses:Contractors",
+      "tax": "0",
+      "documents": [],
+      "note": "owner question: contractor (owner confirms)"
+    },
+    {
+      "bank_txn_id": "B12",
+      "date": "2026-09-12",
+      "narration": "NEFT CR-ZENITH FOODS PVT LTD-PART PMT 033",
+      "amount": "50000.00",
+      "account": "Income:Services",
+      "tax": "7627.12",
+      "documents": [],
+      "note": "TRAP 4: partial payment of KAV-2026-033 (88,500); 38,500 still open"
+    },
+    {
+      "bank_txn_id": "B13",
+      "date": "2026-09-14",
+      "narration": "BBPS-METRO POWER DIST-7731902",
+      "amount": "-4820.00",
+      "account": "Expenses:Utilities",
+      "tax": "0",
+      "documents": [
+        "D07"
+      ],
+      "note": null
+    },
+    {
+      "bank_txn_id": "B14",
+      "date": "2026-09-15",
+      "narration": "UPI-BRIGHTLINE STATIONERS",
+      "amount": "-1180.00",
+      "account": "Expenses:Office-Supplies",
+      "tax": "0",
+      "documents": [
+        "D08"
+      ],
+      "note": "TRAP 7: receipt photo is rotated and blurred; no GST breakdown, so no input credit"
+    },
+    {
+      "bank_txn_id": "B15",
+      "date": "2026-09-16",
+      "narration": "RFND PIXELFORGE PTE SINGAPORE",
+      "amount": "590.00",
+      "account": "Expenses:Software",
+      "tax": "0",
+      "documents": [],
+      "note": "TRAP 5: vendor refund, reduces Software expense (not income)"
+    },
+    {
+      "bank_txn_id": "B16",
+      "date": "2026-09-18",
+      "narration": "NEFT CR-NIMBUS HEALTH PVT LTD-KAV034 035 036",
+      "amount": "236000.00",
+      "account": "Income:Services",
+      "tax": "36000.00",
+      "documents": [],
+      "note": "TRAP 3: one payment for three invoices (94,400 + 82,600 + 59,000)"
+    },
+    {
+      "bank_txn_id": "B17",
+      "date": "2026-09-19",
+      "narration": "UPI-PRINTWORKS STUDIO-PWS1177",
+      "amount": "-5900.00",
+      "account": "Expenses:Printing",
+      "tax": "900.00",
+      "documents": [
+        "D05"
+      ],
+      "note": "TRAP 8: bill total printed as 6,100, correct total and payment 5,900"
+    },
+    {
+      "bank_txn_id": "B18",
+      "date": "2026-09-21",
+      "narration": "NETFLIX.COM SUBSCRIPTION",
+      "amount": "-649.00",
+      "account": "Equity:Owner-Drawings",
+      "tax": "0",
+      "documents": [],
+      "note": "TRAP 12: personal expense on business account (owner confirms)"
+    },
+    {
+      "bank_txn_id": "B19",
+      "date": "2026-09-22",
+      "narration": "UPI-UDUPI GRAND RESTAURANT",
+      "amount": "-2450.00",
+      "account": "Expenses:Meals",
+      "tax": "0",
+      "documents": [
+        "D09"
+      ],
+      "note": "meals: GST shown but not claimable"
+    },
+    {
+      "bank_txn_id": "B20",
+      "date": "2026-09-30",
+      "narration": "SMS ALERT CHGS SEP",
+      "amount": "-59.00",
+      "account": "Expenses:Bank-Charges",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    },
+    {
+      "bank_txn_id": "B21",
+      "date": "2026-09-30",
+      "narration": "INT CR SWEEP FD",
+      "amount": "1312.00",
+      "account": "Income:Interest",
+      "tax": "0",
+      "documents": [],
+      "note": null
+    }
+  ],
+  "documents": {
+    "D01": {
+      "file": "documents/koramangala-workspaces-sep.pdf",
+      "kind": "bill",
+      "party": "Koramangala Workspaces LLP",
+      "number": "KW/2026/0912",
+      "date": "2026-09-01",
+      "subtotal": "50000.00",
+      "tax": "9000.00",
+      "total": "59000.00",
+      "correct_total": "59000.00"
+    },
+    "D02": {
+      "file": "documents/skyline-fibernet-sep.pdf",
+      "kind": "bill",
+      "party": "Skyline Fibernet Pvt Ltd",
+      "number": "SFN-88213-09",
+      "date": "2026-09-03",
+      "subtotal": "1999.00",
+      "tax": "359.82",
+      "total": "2358.82",
+      "correct_total": "2358.82"
+    },
+    "D03": {
+      "file": "documents/cloudnest-hosting-sep.pdf",
+      "kind": "bill",
+      "party": "CloudNest Hosting Pvt Ltd",
+      "number": "CN-INV-20419",
+      "date": "2026-09-05",
+      "subtotal": "7500.00",
+      "tax": "1350.00",
+      "total": "8850.00",
+      "correct_total": "8850.00"
+    },
+    "D04": {
+      "file": "documents/IMG_cloudnest_invoice_copy.pdf",
+      "kind": "bill",
+      "party": "CloudNest Hosting Pvt Ltd",
+      "number": "CN-INV-20419",
+      "date": "2026-09-05",
+      "subtotal": "7500.00",
+      "tax": "1350.00",
+      "total": "8850.00",
+      "correct_total": "8850.00",
+      "duplicate_of": "D03"
+    },
+    "D05": {
+      "file": "documents/printworks-studio-0917.pdf",
+      "kind": "bill",
+      "party": "PrintWorks Studio",
+      "number": "PWS-1177",
+      "date": "2026-09-17",
+      "subtotal": "5000.00",
+      "tax": "900.00",
+      "total": "6100.00",
+      "correct_total": "5900.00"
+    },
+    "D06": {
+      "file": "documents/pixelforge-annual-seat.pdf",
+      "kind": "bill",
+      "party": "Pixelforge Design Tools Pte Ltd",
+      "number": "PXF-2026-55102",
+      "date": "2026-09-09",
+      "subtotal": "2950.00",
+      "tax": "0.00",
+      "total": "2950.00",
+      "correct_total": "2950.00"
+    },
+    "D07": {
+      "file": "documents/metro-power-aug-sep.pdf",
+      "kind": "bill",
+      "party": "Metro Power Distribution Co",
+      "number": "MPD-7731902",
+      "date": "2026-09-12",
+      "subtotal": "4820.00",
+      "tax": "0.00",
+      "total": "4820.00",
+      "correct_total": "4820.00"
+    },
+    "D08": {
+      "file": "documents/receipt_photo_0915.png",
+      "kind": "receipt",
+      "party": "BRIGHTLINE STATIONERS",
+      "date": "2026-09-15",
+      "total": "1180.00"
+    },
+    "D09": {
+      "file": "documents/receipt_lunch_0922.png",
+      "kind": "receipt",
+      "party": "UDUPI GRAND RESTAURANT",
+      "date": "2026-09-22",
+      "total": "2450.00"
+    }
+  },
+  "open_items": {
+    "missing_bills": [
+      "B08"
+    ],
+    "duplicate_documents": [
+      [
+        "D04",
+        "D03"
+      ]
+    ],
+    "vendor_errors": [
+      {
+        "doc": "D05",
+        "printed_total": "6100.00",
+        "correct_total": "5900.00"
+      }
+    ],
+    "partial_payments": [
+      {
+        "invoice": "KAV-2026-033",
+        "paid": "50000.00",
+        "open": "38500.00"
+      }
+    ],
+    "overdue_invoices": [
+      {
+        "invoice": "KAV-2026-029",
+        "client": "Orbit Logistics Pvt Ltd",
+        "total": "141600.00",
+        "days_overdue_at_month_end": 43
+      }
+    ],
+    "uninvoiced_work": [
+      {
+        "client": "Zenith Foods Pvt Ltd",
+        "project": "Packaging design sprint",
+        "hours": 40
+      }
+    ],
+    "owner_questions": [
+      "B11",
+      "B18"
+    ]
+  },
+  "matches": {
+    "B02": [
+      "KAV-2026-031"
+    ],
+    "B12": [
+      "KAV-2026-033"
+    ],
+    "B16": [
+      "KAV-2026-034",
+      "KAV-2026-035",
+      "KAV-2026-036"
+    ]
+  }
+}

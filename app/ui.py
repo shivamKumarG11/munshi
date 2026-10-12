@@ -207,3 +207,96 @@ def note(text: str, logo: str | None = "neatlogs") -> str:
 
 def tile(label: str, value: str, kind: str = "", tilt: bool = True) -> str:
     return f'<div class="tile {kind} {"tilt" if tilt else ""}"><div class="label">{label}</div><div class="big">{value}</div></div>'
+
+
+# --------------------------------------------------------------------------- v3: the office
+
+AVATAR = {k: _data_uri(f"avatars/{k}.svg") for k in
+          ["owner", "researcher", "reader", "bookkeeper", "auditor", "collector", "briefer"]}
+
+TEAM = [
+    # key, person, role, badge, progress steps
+    ("researcher", "Riya", "Researcher", '<span class="chip light">SEC EDGAR</span>', ["research"]),
+    ("reader", "Arjun", "Reader", '<span class="chip">Nova · Claude</span>', ["read"]),
+    ("bookkeeper", "Meena", "Bookkeeper", f'<span class="chip"><img src="{LOGO["crustdata"]}" alt="Crustdata"></span>', ["match", "post"]),
+    ("auditor", "Dev", "Auditor", '<span class="wnote">matches the bank</span>', ["verify", "gap_hunt"]),
+    ("collector", "Sana", "Collector", f'<span class="chip"><img src="{LOGO["dodo"]}" alt="Dodo Payments"></span>', ["actions"]),
+    ("briefer", "Kabir", "Briefer", f'<span class="chip"><img src="{LOGO["neatlogs"]}" alt="neatlogs" style="height:12px;border-radius:3px"> traced</span>', ["brief", "update"]),
+]
+
+OFFICE_CSS = """
+<style>
+.office-wrap { perspective: 1500px; padding: 6px 0 18px; }
+.office { transform: rotateX(20deg); transform-style: preserve-3d; padding: 26px 22px 34px; border-radius: 30px;
+          background: #15201C; box-shadow: 0 2px 0 #24332D inset, 0 40px 80px rgba(0,0,0,.55);
+          display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 14px; }
+.desk { display:flex; flex-direction:column; align-items:center; gap:5px; }
+.desk .bubble { min-height: 34px; max-width: 220px; padding: 7px 11px; border-radius: 12px; background:#22322B; font-size: 13px;
+                text-align:center; line-height:1.35; }
+.desk .bubble.warn { background:#3A3018; color:#F2B84B; }
+.desk .bubble.ok { background:#4FD18B; color:#0E1613; font-weight:600; }
+.desk .bubble.idle { background:transparent; color:#6F7F77; }
+.desk .av { width: 88px; height: 88px; border-radius: 50%; transition: all .3s; }
+.desk .av.working { box-shadow: 0 0 0 4px #F2B84B, 0 0 26px rgba(242,184,75,.55); transform: translateY(-6px); }
+.desk .av.done { box-shadow: 0 0 0 4px #4FD18B; }
+.desk .av.idle { opacity: .55; filter: grayscale(.4); }
+.desk .table { width: 150px; height: 22px; border-radius: 8px; background:#3B2A1E; border-bottom: 6px solid #22170F; margin-top:-6px; }
+.desk .who { font-weight:600; font-size:14px; }
+.owner { display:flex; align-items:center; gap:14px; padding: 10px 16px; border-radius: 18px; background:#1A2621; margin-bottom: 4px; }
+.owner img { width:58px; height:58px; }
+.owner .say { padding: 10px 14px; border-radius: 14px 14px 14px 4px; background:#EEF3EF; color:#0E1613; font-size:15px; font-weight:500; }
+.cat { padding:16px; border-radius:18px; background:#1A2621; border-bottom:7px solid #0B110E; }
+.cat .n { font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; margin-top:8px; }
+.cat .l { font-size:14px; color:#A9B8B0; }
+.cat .ic { width:38px; height:38px; border-radius:10px; background:#22322B; display:flex; align-items:center; justify-content:center; }
+.doc { border-radius:16px; background:#EEF3EF; color:#0E1613; padding:10px; border-bottom:6px solid #A9B8B0; margin-bottom:12px; }
+.doc .thumb { height:150px; border-radius:10px; background:#FFFFFF; overflow:hidden; display:flex; align-items:flex-start; justify-content:center; }
+.doc .thumb img { width:100%; object-fit:cover; object-position: top; }
+.doc .fn { font-size:13px; font-weight:600; margin-top:8px; word-break: break-all; }
+.doc .kind { font-size:12px; color:#4F5B55; }
+.doc.new { box-shadow: 0 0 0 3px #F2B84B; }
+.status { padding:18px; border-radius:20px; border-bottom:8px solid; display:flex; align-items:center; gap:12px; margin-bottom: 12px; }
+.status.ok { background:#4FD18B; color:#0E1613; border-color:#2E8F5C; }
+.status.wait { background:#1A2621; color:#EEF3EF; border-color:#0B110E; }
+.status .t { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; }
+.mini { padding:12px; border-radius:14px; background:#1A2621; }
+.mini .l { font-size:12px; color:#A9B8B0; } .mini .v { font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; }
+.changed { padding:14px 16px; border-radius:16px; background:#2E2715; margin: 10px 0; }
+.changed .h { font-size:13px; font-weight:600; color:#F2B84B; margin-bottom:6px; }
+.changed div { font-size:14px; margin: 4px 0; }
+</style>
+"""
+
+ICON_PATHS = {
+    "bank": '<path d="M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M2 20h20M12 3l9 5H3z"/>',
+    "bill": '<path d="M6 3h9l3 3v15H6z"/><path d="M9 10h6M9 14h6"/>',
+    "photo": '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="12" r="3"/>',
+    "invoice": '<path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/>',
+    "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+}
+
+
+def category(icon: str, number: str, label: str) -> str:
+    return (f'<div class="cat"><div class="ic">{svg_img(ICON_PATHS[icon], 22, "#8FE3B5")}</div>'
+            f'<div class="n">{number}</div><div class="l">{label}</div></div>')
+
+
+def doc_card(name: str, kind: str, thumb_uri: str | None, new: bool = False) -> str:
+    img = f'<img src="{thumb_uri}" alt="">' if thumb_uri else ""
+    return (f'<div class="doc{" new" if new else ""}"><div class="thumb">{img}</div>'
+            f'<div class="fn">{name}</div><div class="kind">{kind}{" · just arrived" if new else ""}</div></div>')
+
+
+def owner(text: str) -> str:
+    return f'<div class="owner"><img src="{AVATAR["owner"]}" alt="Kavya, the owner"><div class="say">{text}</div></div>'
+
+
+def office(states: dict[str, str], bubbles: dict[str, tuple[str, str]]) -> str:
+    """states: worker -> idle|working|done ; bubbles: worker -> (text, style ok|warn|''|idle)."""
+    desks = []
+    for key, person, role, badge, _ in TEAM:
+        text, style = bubbles.get(key, ("waiting", "idle"))
+        desks.append(f'<div class="desk"><div class="bubble {style}">{text}</div>'
+                     f'<img class="av {states.get(key, "idle")}" src="{AVATAR[key]}" alt="{person}, {role}">'
+                     f'<div class="table"></div><div class="who">{person} · {role}</div>{badge}</div>')
+    return f'<div class="office-wrap"><div class="office">{"".join(desks)}</div></div>'
