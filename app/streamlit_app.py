@@ -416,10 +416,9 @@ def office_page():
                     f"- Income-tax provision {Decimal(t['assumptions']['income_tax_provision_rate']):.0%} of profit "
                     f"= **{ui.inr(t['income_tax_provision'])}**")
     st.html('<div style="height:4px"></div>')
-    c = st.columns(3, gap="medium")
+    c = st.columns(2, gap="medium")
     with c[0]:
         approvals(a)
-    with c[1]:
         with st.container(border=True):
             if f.get("changes"):
                 st.html('<div class="panel-h" style="color:#F2B84B">What changed</div>')
@@ -428,7 +427,7 @@ def office_page():
             else:
                 st.html('<div class="panel-h">What changed</div>')
                 st.caption("Nothing yet. Use **+ Something new arrived** when a late bill or payment shows up.")
-    with c[2]:
+    with c[1]:
         chat_box(d)
 
 
@@ -469,7 +468,7 @@ def chat_box(d: dict) -> None:
     history = S.setdefault("chat", [])
     with st.container(border=True):
         st.html('<div class="panel-h">Ask Munshi</div>')
-        for h in history[-2:]:
+        for h in history[-3:]:
             st.chat_message("user").write(h["q"])
             st.chat_message("assistant", avatar="🧾").write(h["a"])
         q = None
