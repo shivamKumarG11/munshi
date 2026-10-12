@@ -30,6 +30,7 @@ THUMBS = ROOT / "state" / "thumbs"
 st.set_page_config(page_title="Munshi · your AI CA", page_icon="🧾", layout="wide")
 st.html(ui.CSS)
 st.html(ui.OFFICE_CSS)
+st.html(ui.LINE_CSS)
 S = st.session_state
 
 
@@ -158,7 +159,7 @@ def friendly(step: str, msg: str) -> str:
 
 # --------------------------------------------------------------------------- the close (live + incremental)
 
-def run_close(office_box, feed_box, previous: dict | None = None) -> None:
+def run_close(office_box, feed_box, previous: dict | None = None, owner_says: str = "Close September, please") -> None:
     ws = current_workspace()
     states = {k: "idle" for k, *_ in ui.TEAM}
     bubbles: dict[str, tuple[str, str]] = {}
@@ -176,7 +177,7 @@ def run_close(office_box, feed_box, previous: dict | None = None) -> None:
             style = "warn" if ("✗" in message or "⚠" in message or step == "gap_hunt") else ("ok" if "✅" in message else "")
             bubbles[worker] = (short(friendly(step, message)), style)
         feed.append(f"<div><b>{step}</b> · {message}</div>")
-        office_box.html(ui.office(states, bubbles))
+        office_box.html(ui.line(states, bubbles, owner_says))
         feed_box.html('<div class="card" style="font-size:13px;line-height:1.7;max-height:200px;overflow:hidden">'
                       + "".join(feed[-7:]) + "</div>")
 
@@ -193,22 +194,78 @@ def run_close(office_box, feed_box, previous: dict | None = None) -> None:
 
 # --------------------------------------------------------------------------- page 1: your month
 
-def month_page():
-    ws = current_workspace()
-    left, right = st.columns([1, 3], gap="large")
-    with left:
-        st.html('<div class="title" style="font-size:24px">Pick a business</div>')
+@st.dialog("Document", width="large")
+def view_document(path_str: str) -> None:
+    path = Path(path_str)
+    st.caption(path.name)
+    if path.suffix.lower() == ".pdf":
+        import pdfplumber
+        big = THUMBS / f"big-{hashlib.sha256(path.read_bytes()).hexdigest()[:16]}.png"
+        if not big.exists():
+            with pdfplumber.open(path) as pdf:
+                pdf.pages[0].to_image(resolution=110).save(big)
+        st.image(str(big), width="stretch")
+    else:
+        st.image(str(path), width="stretch")
+
+
+def business_picker(ws: Path) -> None:
+    biz = business(ws)
+    with st.popover(f"🏢  {biz['name']}  ▾", width="stretch"):
+        st.markdown("**Sample businesses**")
         for sc in workspace.scenarios():
-            active = sc["slug"] == S.get("slug")
-            if st.button(sc["name"], key=f"pick-{sc['slug']}", width="stretch",
-                         type="primary" if active else "secondary", help=sc["industry"]):
+            if st.button(f"{sc['name']}  ·  {sc['industry']}", key=f"pick-{sc['slug']}", width="stretch",
+                         type="primary" if sc["slug"] == S.get("slug") else "secondary"):
                 choose(sc["slug"])
                 st.rerun()
-        st.html('<div class="muted" style="font-size:13px;margin:16px 0 6px">Or add your own files to this month</div>')
-        files = st.file_uploader("Bank CSV · bills (PDF) · receipt photos · invoices / timesheet CSV",
-                                 accept_multiple_files=True, disabled=READ_ONLY, key=f"up-{S.get('slug')}",
-                                 label_visibility="collapsed")
-        if files and st.button("Add these files", width="stretch", disabled=READ_ONLY, key="add-files"):
+        st.divider()
+        st.markdown("**+ New business**")
+        with st.form("new-biz", border=False):
+            name = st.text_input("Business name", placeholder="e.g. Sharma Electricals")
+            industry = st.text_input("What it does", placeholder="e.g. Electrical contractor")
+            city = st.text_input("City", placeholder="e.g. Jaipur")
+            c = st.columns(2)
+            gst = c[0].selectbox("GST rate on sales", ["0.18", "0.12", "0.05", "0"], index=0)
+            credit = c[1].checkbox("Claims input tax credit", value=True)
+            if st.form_submit_button("Create business", type="primary", width="stretch", disabled=READ_ONLY):
+                if not name.strip():
+                    st.error("Give the business a name.")
+                else:
+                    ws_new = workspace.new_business(name.strip(), industry.strip() or "Small business",
+                                                    city.strip(), gst, credit)
+                    S.update(slug=ws_new.name, ws=str(ws_new), run_dir=None, chat=[], decided={}, links={},
+                             bubbles={}, states={}, new_files=[])
+                    st.rerun()
+
+
+def month_page():
+    ws = current_workspace()
+    biz = business(ws)
+    inv = inventory(ws)
+    head = st.columns([2, 1.2, 1])
+    head[0].html(f'<div class="title">What you gave Munshi</div>'
+                 f'<p class="sub" style="margin:0">{biz.get("industry", "")} · September 2026</p>')
+    with head[1]:
+        st.html('<div style="height:18px"></div>')
+        business_picker(ws)
+    with head[2]:
+        st.html('<div style="height:18px"></div>')
+        if st.button("Hand it to the team →", type="primary", width="stretch", key="handover",
+                     disabled=not inv["bank"]):
+            S["autostart"] = not READ_ONLY and not S.get("run_dir")
+            st.switch_page(PAGES["office"])
+    cats = st.columns(5)
+    for col, args in zip(cats, [("bank", str(len(inv["bank"])), "bank lines"),
+                                ("bill", str(len(inv["bills"])), "bills"),
+                                ("photo", str(len(inv["photos"])), "receipt photos"),
+                                ("invoice", str(len(inv["invoices"])), "invoices sent"),
+                                ("clock", f"{inv['hours']} h", "timesheet")]):
+        col.html(ui.category(*args))
+    with st.expander("➕  Add files to this month (bank CSV · bills · receipt photos · invoices / timesheet CSV)",
+                     expanded=not inv["bank"]):
+        files = st.file_uploader("files", accept_multiple_files=True, disabled=READ_ONLY,
+                                 key=f"up-{S.get('slug')}", label_visibility="collapsed")
+        if files and st.button("Add these files", type="primary", disabled=READ_ONLY, key="add-files"):
             for f in files:
                 try:
                     kind = workspace.add_file(ws, f.name, f.getvalue())
@@ -217,38 +274,27 @@ def month_page():
                 except ValueError as e:
                     st.error(str(e))
             st.rerun()
-    with right:
-        biz = business(ws)
-        inv = inventory(ws)
-        head = st.columns([2, 1])
-        head[0].html(f'<div class="title">What you gave Munshi</div>'
-                     f'<p class="sub" style="margin:0">{biz["name"]} · {biz.get("industry", "")} · September 2026</p>')
-        with head[1]:
-            st.html('<div style="height:16px"></div>')
-            if st.button("Hand it to the team →", type="primary", width="stretch", key="handover"):
-                S["autostart"] = not READ_ONLY and not S.get("run_dir")
-                st.switch_page(PAGES["office"])
-        cats = st.columns(5)
-        for col, args in zip(cats, [("bank", str(len(inv["bank"])), "bank lines"),
-                                    ("bill", str(len(inv["bills"])), "bills"),
-                                    ("photo", str(len(inv["photos"])), "receipt photos"),
-                                    ("invoice", str(len(inv["invoices"])), "invoices sent"),
-                                    ("clock", f"{inv['hours']} h", "timesheet")]):
-            col.html(ui.category(*args))
-        st.html('<div style="height:8px"></div>')
-        grid = st.columns(4)
-        new = set(S.get("new_files", []))
-        for i, d in enumerate(inv["docs"]):
-            kind = "Bill · PDF" if d.suffix.lower() == ".pdf" else "Receipt · photo"
-            grid[i % 4].html(ui.doc_card(d.name, kind, thumb(d), new=d.name in new))
+    if not inv["bank"]:
+        st.info("Add a bank statement CSV to start (columns: Date, Narration, Ref No, Withdrawal Amt, "
+                "Deposit Amt, Closing Balance). See samples/ for examples.")
+    st.html('<div style="height:6px"></div>')
+    grid = st.columns(4)
+    new = set(S.get("new_files", []))
+    for i, d in enumerate(inv["docs"]):
+        kind = "Bill · PDF" if d.suffix.lower() == ".pdf" else "Receipt · photo"
+        with grid[i % 4]:
+            st.html(ui.doc_card(d.name, kind, thumb(d), new=d.name in new))
+            if st.button("View large", key=f"view-{d.name}", width="stretch"):
+                view_document(str(d))
+    if inv["bank"]:
         with st.expander(f"Bank statement · {len(inv['bank'])} lines"):
             st.dataframe([{"Date": t.date.strftime("%d %b"), "Narration": t.description, "Amount ₹": float(t.amount)}
                           for t in inv["bank"]], hide_index=True, width="stretch")
-        if inv["invoices"]:
-            with st.expander(f"Invoices you sent · {len(inv['invoices'])}"):
-                st.dataframe(inv["invoices"], hide_index=True, width="stretch")
-        st.html(ui.note("Sample businesses are generated demo data (see samples/). "
-                        "The reader is benchmarked on real receipts.", logo=None))
+    if inv["invoices"]:
+        with st.expander(f"Invoices you sent · {len(inv['invoices'])}"):
+            st.dataframe(inv["invoices"], hide_index=True, width="stretch")
+    st.html(ui.note("Sample businesses are generated demo data (see samples/). "
+                    "The reader is benchmarked on real receipts.", logo=None))
 
 
 # --------------------------------------------------------------------------- page 2: the office
@@ -257,65 +303,91 @@ def office_page():
     ws = current_workspace()
     biz = business(ws)
     d = run_data()
-    left, right = st.columns([2, 1], gap="large")
-    with left:
-        said = "Thanks, team! 🙏" if d and d["facts"]["balanced"] else "Close September for me, please."
-        st.html(ui.owner(f"{said} <span class='muted' style='font-size:13px'> · Kavya, owner of {biz['name']}</span>"))
-        office_box, feed_box = st.empty(), st.empty()
-        states = S.get("states") or ({k: "done" for k, *_ in ui.TEAM} if d else {})
-        bubbles = S.get("bubbles") or ({} if not d else {"auditor": ("Books match the bank: ₹0", "ok")})
-        office_box.html(ui.office(states, bubbles))
-        if READ_ONLY:
-            st.info("Read-only demo: showing the recorded close. Run locally with API keys to watch the team work live.")
-        elif not d:
-            if st.button("Start the close", type="primary", width="stretch", key="start") or S.pop("autostart", False):
-                run_close(office_box, feed_box)
-                st.rerun()
-    with right:
-        if not d:
-            st.html('<div class="status wait"><div><div class="t">Ready when you are</div>'
-                    '<div class="muted" style="font-size:13px">The team hasn\'t started yet.</div></div></div>')
-            return
-        f, a = d["facts"], d["actions"]
-        t = f["tax"]
-        ok = f["balanced"]
-        st.html(f'<div class="status {"ok" if ok else "wait"}"><div><div class="t">'
-                f'{"September closed ✓" if ok else "Not closed yet"}</div><div style="font-size:13px;font-weight:600">'
-                f'{"Books match the bank: ₹0" if ok else "Books are off by " + ui.inr(f["bank_gap"])}</div></div></div>')
-        owed = sum(Decimal(i["open"]) for i in f.get("open_invoices", []))
-        m = st.columns(3)
-        for col, (lab, val) in zip(m, [("Profit", t["profit"]), ("Tax aside", t["set_aside"]), ("Owed to you", owed)]):
-            col.html(f'<div class="mini"><div class="l">{lab}</div><div class="v">{ui.inr(val)}</div></div>')
-        if f.get("gap_hunt"):
-            names = {"duplicate_post": "duplicate bill removed", "amount_mismatch": "vendor's wrong total caught"}
-            st.html('<div class="changed" style="background:#1A2621"><div class="h" style="color:#8FE3B5">'
-                    'Fixed during the close</div>'
-                    + "".join(f"<div>{ui.inr(abs(Decimal(h['effect'])))} · {names.get(h['kind'], h['kind'])}</div>"
-                              for h in f["gap_hunt"]) + "</div>")
-        if f.get("changes"):
-            st.html('<div class="changed"><div class="h">What changed</div>'
-                    + "".join(f"<div>{c}</div>" for c in f["changes"]) + "</div>")
-        approvals(a)
-        with st.container(border=True):
-            st.markdown("**Something new arrived?**  \nDrop a bill or bank lines; only the affected workers react.")
+    title_box = st.empty()
+    controls = st.columns([3, 1.3, 1])
+    with controls[1]:
+        add_new = None
+        with st.popover("+ Something new arrived", width="stretch", disabled=READ_ONLY or not d):
+            st.markdown("Drop a bill or bank lines. Munshi remembers the rest and only re-does what's affected.")
             new_files = st.file_uploader("new", accept_multiple_files=True, label_visibility="collapsed",
-                                         disabled=READ_ONLY, key=f"late-{S.get('slug')}-{S.get('run_dir')}")
-            c = st.columns(2)
-            go_new = c[0].button("Add & update", width="stretch", disabled=READ_ONLY or not new_files, key="add-new")
-            go_late = c[1].button("Late files", width="stretch", disabled=READ_ONLY, key="add-late",
-                                  help="Adds this sample's late arrivals (samples/<business>/late)")
-        if go_new or go_late:
-            previous = {"entries": d["entries"], "facts": f, "actions": a}
-            if go_late:
-                added = workspace.add_late_arrivals(ws, S["slug"])
-                S.setdefault("new_files", []).extend(x.split(" →")[0] for x in added)
+                                         key=f"late-{S.get('slug')}-{S.get('run_dir')}")
+            if st.button("Add & update", type="primary", width="stretch", disabled=not new_files, key="add-new"):
+                add_new = ("files", new_files)
+            if (workspace.SAMPLES / S.get("slug", "") / "late").exists():
+                if st.button("Use this sample's late files", width="stretch", key="add-late"):
+                    add_new = ("late", None)
+    run_label = "Run again" if d else "Start the close"
+    has_bank = bool(close.load_bank(ws))
+    start = controls[2].button(run_label, type="primary", width="stretch", disabled=READ_ONLY or not has_bank,
+                               key="start", help=None if has_bank else "Add a bank statement in Your month first")
+    line_box, feed_box = st.empty(), st.empty()
+
+    def title(text: str, pill: str, ok: bool):
+        title_box.html(f'<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'
+                       f'<span class="title" style="margin:0">{text}</span>'
+                       f'<span class="{"pill-ok" if ok else "pill-wait"}">{pill}</span></div>')
+
+    if d:
+        f = d["facts"]
+        title("September is closed." if f["balanced"] else "Not closed yet.",
+              "Books match the bank · ₹0" if f["balanced"] else f"Off by {ui.inr(f['bank_gap'])}", f["balanced"])
+    else:
+        title(f"{biz['name']}", "Ready when you are", False)
+    states = S.get("states") or ({k: "done" for k, *_ in ui.TEAM} if d else {})
+    bubbles = S.get("bubbles") or ({"auditor": ("Books match the bank ✓", "ok")} if d else {})
+    owner_says = "Thanks, team! 🙏" if d and d["facts"]["balanced"] else "Close September, please"
+    line_box.html(ui.line(states, bubbles, owner_says))
+
+    previous = None
+    if add_new and d:
+        previous = {"entries": d["entries"], "facts": d["facts"], "actions": d["actions"]}
+        if add_new[0] == "late":
+            added = workspace.add_late_arrivals(ws, S["slug"])
+            S.setdefault("new_files", []).extend(x.split(" →")[0] for x in added)
+        else:
+            for nf in add_new[1]:
+                workspace.add_file(ws, nf.name, nf.getvalue())
+                S.setdefault("new_files", []).append(nf.name)
+    if (start or add_new or S.pop("autostart", False)) and not READ_ONLY and has_bank:
+        title("The team is working…", "about a minute", False)
+        run_close(line_box, feed_box, previous=previous, owner_says="Close September, please")
+        st.rerun()
+    if READ_ONLY:
+        st.info("Read-only demo: showing the recorded close. Run locally with API keys to watch the team work live.")
+    if not d:
+        return
+
+    f, a = d["facts"], d["actions"]
+    t = f["tax"]
+    owed = sum(Decimal(i["open"]) for i in f.get("open_invoices", []))
+    r = st.columns(4)
+    r[0].html(f'<div class="res"><div class="l">Profit</div><div class="v">{ui.inr(t["profit"])}</div></div>')
+    r[1].html(f'<div class="res"><div class="l">Set aside for tax</div><div class="v">{ui.inr(t["set_aside"])}</div></div>')
+    r[2].html(f'<div class="res"><div class="l">Clients owe you</div><div class="v">{ui.inr(owed)}</div></div>')
+    names = {"duplicate_post": "duplicate bill", "amount_mismatch": "vendor error"}
+    fixed = " · ".join(f"{ui.inr(abs(Decimal(h['effect'])))} {names.get(h['kind'], h['kind'])}" for h in f.get("gap_hunt", []))
+    r[3].html(f'<div class="res amber"><div class="l">Fixed during the close</div>'
+              f'<div style="font-size:14px;margin-top:6px">{fixed or "Nothing needed fixing"}</div></div>')
+    with r[1].popover("How is tax worked out?", width="stretch"):
+        st.markdown(f"**Estimate from your settings** (not a filing):  \n"
+                    f"- GST collected {ui.inr(t['output_tax_collected'])} − claimable {ui.inr(t['input_tax_claimable'])} "
+                    f"= **{ui.inr(t['net_indirect_tax'])}**  \n"
+                    f"- Income-tax provision {Decimal(t['assumptions']['income_tax_provision_rate']):.0%} of profit "
+                    f"= **{ui.inr(t['income_tax_provision'])}**")
+    st.html('<div style="height:4px"></div>')
+    c = st.columns(3, gap="medium")
+    with c[0]:
+        approvals(a)
+    with c[1]:
+        with st.container(border=True):
+            if f.get("changes"):
+                st.html('<div class="panel-h" style="color:#F2B84B">What changed</div>')
+                for ch in f["changes"]:
+                    st.markdown(f"- {ch}")
             else:
-                for nf in new_files:
-                    workspace.add_file(ws, nf.name, nf.getvalue())
-                    S.setdefault("new_files", []).append(nf.name)
-            with left:
-                run_close(office_box, feed_box, previous=previous)
-            st.rerun()
+                st.html('<div class="panel-h">What changed</div>')
+                st.caption("Nothing yet. Use **+ Something new arrived** when a late bill or payment shows up.")
+    with c[2]:
         chat_box(d)
 
 
@@ -325,16 +397,16 @@ def approvals(a: dict) -> None:
              + [("reminder", r, f"⏰ Remind {r['client'].split()[0]} {ui.inr(r['open'])}") for r in a["reminders"]]
              + [("bill", m, f"📎 Bill from {m['payee'].split('-')[-1].split('*')[-1][:14].title()} {ui.inr(m['amount'])}")
                 for m in a["missing_bills"]])
-    if not items:
-        return
     with st.container(border=True):
-        st.markdown(f"**{len(items)} drafts need your OK**")
+        st.html(f'<div class="panel-h">Needs your OK · {sum(1 for k, *_ in items) - sum(1 for v in decided.values() if v)}</div>')
+        if not items:
+            st.caption("Nothing to approve.")
         for kind, item, label in items:
             key = f"{kind}-{label}"
-            c = st.columns([3, 2])
-            c[0].markdown(f"{'✅ ' if decided.get(key) == 'approved' else ''}{label}")
+            cc = st.columns([3, 2])
+            cc[0].markdown(f"{'✅ ' if decided.get(key) == 'approved' else ''}{label}")
             if decided.get(key) != "approved":
-                if c[1].button("Approve", key=f"ok-{key}", type="primary", width="stretch", disabled=READ_ONLY):
+                if cc[1].button("Approve", key=f"ok-{key}", type="primary", width="stretch", disabled=READ_ONLY):
                     decided[key] = "approved"
                     if kind == "invoice":
                         link = (item.get("dodo") or {}).get("checkout_url")
@@ -349,26 +421,27 @@ def approvals(a: dict) -> None:
                         links[key] = link
                     st.rerun()
             elif kind == "invoice" and links.get(key):
-                c[1].link_button("Pay link", links[key], width="stretch")
+                cc[1].link_button("Pay link", links[key], width="stretch")
 
 
 def chat_box(d: dict) -> None:
     history = S.setdefault("chat", [])
     with st.container(border=True):
-        st.markdown("**Ask Munshi**")
-        for h in history[-3:]:
+        st.html('<div class="panel-h">Ask Munshi</div>')
+        for h in history[-2:]:
             st.chat_message("user").write(h["q"])
             st.chat_message("assistant", avatar="🧾").write(h["a"])
         q = None
         cols = st.columns(2)
-        if cols[0].button("Who owes me money?", width="stretch", disabled=READ_ONLY, key="q1"):
+        if cols[0].button("Who owes me?", width="stretch", disabled=READ_ONLY, key="q1"):
             q = "Who owes me money?"
-        if cols[1].button("How much can I spend?", width="stretch", disabled=READ_ONLY, key="q2"):
+        if cols[1].button("Safe to spend?", width="stretch", disabled=READ_ONLY, key="q2"):
             q = "After setting aside tax, how much can I safely spend this month?"
-        typed = st.text_input("Ask about your books", key="ask", label_visibility="collapsed",
-                              placeholder="Ask about your books…", disabled=READ_ONLY)
-        if st.button("Ask", width="stretch", disabled=READ_ONLY or not typed, key="ask-btn"):
-            q = typed
+        with st.form("ask-form", border=False, clear_on_submit=True):
+            typed = st.text_input("Ask about your books", label_visibility="collapsed",
+                                  placeholder="Ask about your books…", disabled=READ_ONLY)
+            if st.form_submit_button("Ask", width="stretch", disabled=READ_ONLY) and typed:
+                q = typed
         if q:
             from munshi import chat
             _tracing()

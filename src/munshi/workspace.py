@@ -72,3 +72,20 @@ def forget(ws: Path) -> None:
     late = SAMPLES / ws.name / "late"
     for d in late.iterdir() if late.exists() else []:
         (reads / f"{hashlib.sha256(d.read_bytes()).hexdigest()[:16]}.json").unlink(missing_ok=True)
+
+
+def new_business(name: str, industry: str, city: str, gst_rate: str, input_credit: bool) -> Path:
+    """An empty month for your own business: add a bank statement and bills, then close it."""
+    import re
+    slug = "custom-" + re.sub(r"\W+", "-", name.lower()).strip("-")
+    dest = WORK / slug
+    if dest.exists():
+        shutil.rmtree(dest)
+    (dest / "documents").mkdir(parents=True)
+    (dest / "business.json").write_text(json.dumps({
+        "name": name, "address": city, "industry": industry, "peer_sics": ["8742"], "hourly_rate": "0",
+        "gst_rate": gst_rate, "income_tax_provision_rate": "0.25", "payment_terms_days": 15,
+        "input_credit_allowed": input_credit, "non_claimable_tax_accounts": ["Expenses:Meals"], "client_emails": {},
+    }, indent=2), encoding="utf-8")
+    (dest / "owner_answers.json").write_text("{}", encoding="utf-8")
+    return dest

@@ -300,3 +300,54 @@ def office(states: dict[str, str], bubbles: dict[str, tuple[str, str]]) -> str:
                      f'<img class="av {states.get(key, "idle")}" src="{AVATAR[key]}" alt="{person}, {role}">'
                      f'<div class="table"></div><div class="who">{person} · {role}</div>{badge}</div>')
     return f'<div class="office-wrap"><div class="office">{"".join(desks)}</div></div>'
+
+
+# --------------------------------------------------------------------------- v4: the team as an assembly line
+
+LINE_CSS = """
+<style>
+.line { display:flex; align-items:flex-end; justify-content:space-between; gap:6px; padding:24px 22px 26px;
+        border-radius:26px; background:#15201C; border:1px solid #24332D; }
+.st { display:flex; flex-direction:column; align-items:center; gap:7px; width:132px; }
+.st .say { min-height:40px; width:124px; padding:8px 9px; border-radius:12px; background:#22322B; font-size:12px;
+           text-align:center; line-height:1.35; display:flex; align-items:center; justify-content:center; }
+.st .say.owner { background:#EEF3EF; color:#0E1613; font-weight:600; border-radius:12px 12px 12px 4px; }
+.st .say.warn { background:#3A3018; color:#F2B84B; } .st .say.ok { background:#4FD18B; color:#0E1613; font-weight:600; }
+.st .say.idle { background:transparent; color:#6F7F77; }
+.st .fig { position:relative; transition: transform .3s; }
+.st .fig img.av { width:100px; height:100px; }
+.st.idle .fig img.av { opacity:.5; filter:grayscale(.5); }
+.st.working .fig { transform: translateY(-10px); }
+.st .badge { position:absolute; right:0; top:2px; width:24px; height:24px; border-radius:50%; display:flex;
+             align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#0E1613; }
+.st.done .badge { background:#4FD18B; } .st.working .badge { background:#F2B84B; }
+.st .ped { width:110px; height:18px; border-radius:50%; background:#2B3A34; box-shadow:0 6px 0 #1A2621; }
+.st.done .ped { background:#2E8F5C; box-shadow:0 6px 0 #1C5A3A; }
+.st.working .ped { background:#F2B84B; box-shadow:0 6px 0 #9A6F1F, 0 0 26px rgba(242,184,75,.5); }
+.st .nm { font-weight:600; font-size:14px; text-align:center; }
+.res { padding:18px; border-radius:18px; background:#1A2621; border-bottom:7px solid #0B110E; }
+.res .l { font-size:13px; color:#A9B8B0; } .res .v { font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; }
+.res.amber { background:#2E2715; border-bottom-color:#17130A; } .res.amber .l { color:#F2B84B; font-weight:600; }
+.pill-ok { padding:8px 14px; border-radius:999px; background:#4FD18B; color:#0E1613; font-weight:700; font-size:14px; }
+.pill-wait { padding:8px 14px; border-radius:999px; background:#3A3018; color:#F2B84B; font-weight:700; font-size:14px; }
+.panel-h { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:6px; }
+</style>
+"""
+
+
+def line(states: dict[str, str], bubbles: dict[str, tuple[str, str]], owner_says: str) -> str:
+    """Owner -> six workers (left to right) on 3D pedestals."""
+    out = [f'<div class="line"><div class="st done"><div class="say owner">{owner_says}</div>'
+           f'<div class="fig"><img class="av" src="{AVATAR["owner"]}" alt="Kavya, the owner"></div>'
+           f'<div class="ped" style="background:#3A4C45;box-shadow:0 6px 0 #22312B"></div><div class="nm">Kavya · owner</div>'
+           f'<span class="wnote">hands over the month</span></div>']
+    for key, person, role, badge, _ in TEAM:
+        state = states.get(key, "idle")
+        text, style = bubbles.get(key, ("waiting" if state == "idle" else "", "idle" if state == "idle" else ""))
+        mark = "✓" if state == "done" else ("…" if state == "working" else "")
+        out.append(f'<div class="st {state}"><div class="say {style}">{text}</div>'
+                   f'<div class="fig"><img class="av" src="{AVATAR[key]}" alt="{person}, {role}">'
+                   f'{f"<span class=badge>{mark}</span>" if mark else ""}</div>'
+                   f'<div class="ped"></div><div class="nm">{person} · {role}</div>{badge}</div>')
+    out.append("</div>")
+    return "".join(out)
