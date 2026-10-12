@@ -18,7 +18,7 @@ Built with @neatlogs @EntireHQ @dodopayments @crustdata cc @arithecfo
 ```
 Reply to your own post right after:
 ```
-▶️ Try it live: munshi-bh9x34cncubzjqvgtzzuy.streamlit.app
+▶️ Try it live: munshi-bh9x34cncubzjqvgxtzzuy.streamlit.app
 
 Drop in a late bill and only the affected workers react. Every step traced in @neatlogs.
 ```
@@ -46,7 +46,7 @@ Check `@dodopayments` and `@crustdata` resolve to the official accounts in X's a
 - **Other sponsors:** Dodo Payments (payment links on invoices Munshi drafts, test mode), Crustdata (company lookup
   for cryptic bank payees), neatHack LiteLLM models (Nova, Claude).
 - **Repo:** https://github.com/shivamKumarG11/munshi
-- **Live app:** https://munshi-bh9x34cncubzjqvgtzzuy.streamlit.app
+- **Live app:** https://munshi-bh9x34cncubzjqvgxtzzuy.streamlit.app
 - **Demo video:** [VIDEO LINK]
 - **Evidence:** `evidence/results.md`; neatlogs sessions `close-studio-kaveri-2026-09-v1-023643` (v1) and
   `close-studio-kaveri-2026-09-v2-023726` (v2).
