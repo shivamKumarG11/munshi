@@ -450,11 +450,14 @@ def _commit_books(biz: dict, period_end: date, ledger_text: str, facts: dict) ->
     """Books as code: the closed month is committed to the business's own ledger repository."""
     repo = ROOT / "ledgers" / re.sub(r"\W+", "-", biz["name"].lower()).strip("-")
     repo.mkdir(parents=True, exist_ok=True)
-    if not (repo / ".git").exists():
-        subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
     (repo / f"{period_end:%Y-%m}.beancount").write_text(ledger_text, encoding="utf-8")
     (repo / f"{period_end:%Y-%m}.facts.json").write_text(json.dumps(facts, indent=1, default=str), encoding="utf-8")
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+    try:  # versioning is best-effort: the files above are the books even where git isn't installed
+        if not (repo / ".git").exists():
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+        subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+    except (OSError, subprocess.CalledProcessError):
+        return
     msg = f"Close {period_end:%Y-%m}: " + ("balanced" if facts["balanced"] else f"OFF by {facts['bank_gap']}")
     subprocess.run(["git", "-c", "user.name=Munshi", "-c", "user.email=munshi@localhost", "commit", "-qm", msg,
                     "--allow-empty"], cwd=repo, check=False)

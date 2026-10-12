@@ -5,6 +5,7 @@ Three pages: 1 · Your month (give Munshi your files)  2 · The office (the team
 
 import base64
 import csv
+import os
 import hashlib
 import json
 import re
@@ -25,6 +26,33 @@ from munshi.config import settings  # noqa: E402
 
 EVIDENCE = ROOT / "evidence/runs"
 READ_ONLY = not settings.llm_api_key
+PUBLIC = os.environ.get("MUNSHI_PUBLIC_DEMO", "").lower() in ("1", "true", "yes")
+LIMITS = {"closes": 3, "questions": 10}   # per visitor, only on the public demo
+
+
+def allowed(kind: str) -> bool:
+    """Public demo guard rail: each visitor gets a few live closes and questions."""
+    if not PUBLIC:
+        return True
+    used = S.setdefault("used", {"closes": 0, "questions": 0})
+    if used[kind] >= LIMITS[kind]:
+        st.warning(f"Demo limit reached ({LIMITS[kind]} {kind} per visitor). Run it locally for unlimited use.")
+        return False
+    used[kind] += 1
+    return True
+
+
+def recorded_bubbles() -> dict:
+    """What each worker said last in the recorded evidence close (for the read-only demo)."""
+    log = EVIDENCE / "close-v2" / "close.log"
+    bubbles = {}
+    if log.exists():
+        for line in log.read_text(encoding="utf-8").splitlines():
+            m = re.match(r"\[(\w+)\] (.*)", line)
+            if m and STEP_TO_WORKER.get(m.group(1)):
+                style = "warn" if ("✗" in m.group(2) or m.group(1) == "gap_hunt") else ("ok" if "✅" in m.group(2) else "")
+                bubbles[STEP_TO_WORKER[m.group(1)]] = (short(friendly(m.group(1), m.group(2))), style)
+    return bubbles
 THUMBS = ROOT / "state" / "thumbs"
 
 st.set_page_config(page_title="Munshi · your AI CA", page_icon="🧾", layout="wide")
@@ -334,7 +362,7 @@ def office_page():
     else:
         title(f"{biz['name']}", "Ready when you are", False)
     states = S.get("states") or ({k: "done" for k, *_ in ui.TEAM} if d else {})
-    bubbles = S.get("bubbles") or ({"auditor": ("Books match the bank ✓", "ok")} if d else {})
+    bubbles = S.get("bubbles") or (recorded_bubbles() if d else {})
     owner_says = "Thanks, team! 🙏" if d and d["facts"]["balanced"] else "Close September, please"
     line_box.html(ui.line(states, bubbles, owner_says))
 
@@ -348,7 +376,7 @@ def office_page():
             for nf in add_new[1]:
                 workspace.add_file(ws, nf.name, nf.getvalue())
                 S.setdefault("new_files", []).append(nf.name)
-    if (start or add_new or S.pop("autostart", False)) and not READ_ONLY and has_bank:
+    if (start or add_new or S.pop("autostart", False)) and not READ_ONLY and has_bank and allowed("closes"):
         title("The team is working…", "about a minute", False)
         run_close(line_box, feed_box, previous=previous, owner_says="Close September, please")
         st.rerun()
@@ -442,7 +470,7 @@ def chat_box(d: dict) -> None:
                                   placeholder="Ask about your books…", disabled=READ_ONLY)
             if st.form_submit_button("Ask", width="stretch", disabled=READ_ONLY) and typed:
                 q = typed
-        if q:
+        if q and allowed("questions"):
             from munshi import chat
             _tracing()
             with st.spinner("Checking the books…"):
