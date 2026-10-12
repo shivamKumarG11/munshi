@@ -4,6 +4,8 @@
 
 Built solo for [neatHack](https://neatlogs.com/hackathon) (Oct 10–12, 2026) · track: *Build an agent that works (literally)*
 
+**▶️ [Demo video (2:47)](https://x.com/ShivamKuma31380/status/2109680665235185785)** · **[Live app](https://munshi-bh9x34cncubzjqvgxtzzuy.streamlit.app)**
+
 > Every business has a CA it can't afford to call every day. Munshi is the one you can.
 
 ---

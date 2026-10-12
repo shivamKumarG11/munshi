@@ -45,6 +45,6 @@ Check `@dodopayments` and `@crustdata` resolve to the official accounts in X's a
   for cryptic bank payees), neatHack LiteLLM models (Nova, Claude).
 - **Repo:** https://github.com/shivamKumarG11/munshi
 - **Live app:** https://munshi-bh9x34cncubzjqvgxtzzuy.streamlit.app
-- **Demo video:** [VIDEO LINK]
+- **Demo video:** https://x.com/ShivamKuma31380/status/2109680665235185785 (quote post with the video)
 - **Evidence:** `evidence/results.md`; neatlogs sessions `close-studio-kaveri-2026-09-v1-023643` (v1) and
   `close-studio-kaveri-2026-09-v2-023726` (v2).

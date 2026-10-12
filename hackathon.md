@@ -35,7 +35,7 @@ tags) · **Entire** (checkpoints, entire-graph) · **Crustdata** company API · 
 - Business plan built from measured usage (₹1.39 model cost per demo close at list prices; 92.7% gross margin).
 
 ## Demo
-`uv run streamlit run app/streamlit_app.py` → "Close the month". Video: (link added at submission)
+`uv run streamlit run app/streamlit_app.py` → "Close the month". Video: https://x.com/ShivamKuma31380/status/2109680665235185785
 
 ## Known limitations and next steps
 See README "Known limitations". Next: real business data pilot, owner Q&A in the app, Dodo webhooks on a public
@@ -47,6 +47,6 @@ endpoint, Entire agent integration so `entire why` explains ledger lines, peer f
 - [x] Entire enabled + graph output
 - [x] Business plan from measured costs (`evidence/business-plan/`)
 - Note: cfo.ai not used (its signup requires a payment card)
-- [ ] Demo video ≤ 3 min
+- [x] Demo video ≤ 3 min (https://x.com/ShivamKuma31380/status/2109680665235185785)
 - [ ] Building-in-public links
 - [ ] Quote post on X (Oct 12, 7:00–11:55 PM IST)
