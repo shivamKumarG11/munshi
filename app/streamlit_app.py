@@ -15,7 +15,8 @@ from munshi.config import settings  # noqa: E402
 
 MONTH = ROOT / "data/demo/studio-kaveri/2026-09"
 KEY = ROOT / "data/answer_key/studio-kaveri-2026-09.json"
-EVIDENCE = ROOT / "runs/evidence"
+EVIDENCE = ROOT / "evidence/runs"          # published v1/v2 runs (committed)
+READ_ONLY = not settings.llm_api_key       # hosted demo: no keys on the server, show the recorded run
 
 st.set_page_config(page_title="Munshi: your AI CA", page_icon="🧾", layout="wide")
 
@@ -26,7 +27,7 @@ def _tracing() -> bool:
 
 
 def _latest_run() -> Path | None:
-    runs = sorted((ROOT / "runs").glob("app-*-v2"), reverse=True)
+    runs = sorted((ROOT / "runs").glob("app-*-v2"), reverse=True) if (ROOT / "runs").exists() else []
     if (EVIDENCE / "close-v2" / "facts.json").exists():
         runs.append(EVIDENCE / "close-v2")
     return next((r for r in runs if (r / "facts.json").exists()), None)
@@ -63,7 +64,10 @@ with st.sidebar:
     st.divider()
     st.markdown(f"LLM: `{settings.llm_provider}`  \n"
                 f"Tracing: {'✅ neatlogs' if _tracing() else '⚠ off (no key)'}")
-    live = st.toggle("Create real Dodo payment links (test mode)", value=False)
+    live = st.toggle("Create real Dodo payment links (test mode)", value=False, disabled=READ_ONLY)
+    if READ_ONLY:
+        st.info("**Read-only demo.** Showing the recorded v2 close (neatHack models, traced in neatlogs). "
+                "Run it live locally: `uv run streamlit run app/streamlit_app.py`.")
 
 tab_close, tab_books, tab_brief, tab_actions, tab_research, tab_evidence = st.tabs(
     ["▶ Close the month", "📒 Books", "📰 Brief", "✅ Actions", "🔎 Research", "📊 Evidence"])
@@ -75,7 +79,16 @@ with tab_close:
     c1.markdown("**Inputs**\n\n- `bank_statement.csv`\n- `invoices_issued.csv`\n- `timesheet.csv`\n"
                 + "\n".join(f"- `{n}`" for n in inputs))
     with c2:
-        if st.button("Close the month", type="primary", width="stretch"):
+        if READ_ONLY:
+            st.button("Close the month (runs locally with API keys)", disabled=True, width="stretch")
+            log_file = EVIDENCE / "close-v2" / "close.log"
+            if log_file.exists():
+                st.markdown("**Recorded run log** (v2 evidence close):")
+                box = st.container(border=True)
+                for line in log_file.read_text(encoding="utf-8").splitlines():
+                    if line.startswith("["):
+                        _show(box, line)
+        elif st.button("Close the month", type="primary", width="stretch"):
             log = st.container(border=True)
             icons = {"plan": "🗂", "research": "🔎", "read": "📄", "match": "🔗", "post": "✏️", "verify": "⚖️",
                      "gap_hunt": "🕵️", "actions": "✅", "brief": "📰"}
@@ -177,6 +190,17 @@ with tab_evidence:
                       for t in v2["traps"]], width="stretch", hide_index=True)
     else:
         st.info("Evidence runs not found yet (runs/evidence).")
-    for f in sorted((ROOT / "runs").glob("benchmark-*.json"))[-2:]:
-        b = json.loads(f.read_text(encoding="utf-8"))
-        st.markdown(f"**Reader benchmark {b['version']}** on {b['n']} real receipts: {b['accuracy']}")
+    st.subheader("Reader on real scanned receipts (SROIE, 40 receipts)")
+    bench = EVIDENCE / "benchmark"
+    from munshi import benchmark as _bm
+    rows = []
+    for label, pattern in [("v1: plain prompt", "benchmark-v1-*.json"), ("v2 first attempt", "benchmark-v2-before-fix.json"),
+                           ("v2 after fix", "benchmark-v2-after-fix.json")]:
+        found = sorted(bench.glob(pattern))
+        if found:
+            acc = _bm.rescore(found[-1])["accuracy"]
+            rows.append({"reader": label, "company": f"{acc['company']:.1%}", "date": f"{acc['date']:.1%}",
+                         "total": f"{acc['total']:.1%}"})
+    if rows:
+        st.dataframe(rows, width="stretch", hide_index=True)
+        st.caption("The benchmark caught a regression in v2's first attempt (date parsing crash), fixed before the evidence run.")
