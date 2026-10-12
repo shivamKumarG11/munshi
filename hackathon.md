@@ -45,7 +45,8 @@ endpoint, Entire agent integration so `entire why` explains ledger lines, peer f
 - [x] Public repo with commits dated during the hackathon
 - [x] neatlogs traces (v1/v2 sessions)
 - [x] Entire enabled + graph output
-- [ ] cfo.ai: business plan inputs ready (`evidence/cfo-ai/`); account access pending (no card), asked on Discord
+- [x] Business plan from measured costs (`evidence/business-plan/`)
+- Note: cfo.ai not used (its signup requires a payment card)
 - [ ] Demo video ≤ 3 min
 - [ ] Building-in-public links
 - [ ] Quote post on X (Oct 12, 7:00–11:55 PM IST)

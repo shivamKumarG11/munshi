@@ -1,0 +1,14 @@
+company,month,account,type,amount_inr
+Studio Kaveri Design LLP,2026-09,Bank-Charges,expense,59.00
+Studio Kaveri Design LLP,2026-09,Contractors,expense,12000.00
+Studio Kaveri Design LLP,2026-09,Hosting,expense,7500.00
+Studio Kaveri Design LLP,2026-09,Internet,expense,1999.00
+Studio Kaveri Design LLP,2026-09,Meals,expense,2450.00
+Studio Kaveri Design LLP,2026-09,Office-Supplies,expense,1180.00
+Studio Kaveri Design LLP,2026-09,Printing,expense,5000.00
+Studio Kaveri Design LLP,2026-09,Rent,expense,50000.00
+Studio Kaveri Design LLP,2026-09,Salaries,expense,195000.00
+Studio Kaveri Design LLP,2026-09,Software,expense,5310.00
+Studio Kaveri Design LLP,2026-09,Utilities,expense,4820.00
+Studio Kaveri Design LLP,2026-09,Interest,revenue,1312.00
+Studio Kaveri Design LLP,2026-09,Services,revenue,342372.88

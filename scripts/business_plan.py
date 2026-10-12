@@ -1,8 +1,8 @@
 """Munshi's own business plan inputs, built from MEASURED usage (runs/evidence/close-v2/run.json).
 
 Outputs:
-  evidence/cfo-ai/business_plan_inputs.csv   driver table to load into cfo.ai (CSV upload is first-class there)
-  evidence/cfo-ai/business_plan.md           the plan in plain words, with every assumption visible
+  evidence/business-plan/business_plan_inputs.csv   month-by-month model (18 months, two scenarios)
+  evidence/business-plan/business_plan.md           the plan in plain words, with every assumption visible
 
 Model prices are public list prices per million tokens (USD), stated as assumptions; the neatlogs
 dashboard shows the actual cost of each traced close.
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RUN = ROOT / "runs/evidence/close-v2/run.json"
-OUT = ROOT / "evidence/cfo-ai"
+OUT = ROOT / "evidence/business-plan"
 
 USD_INR = 84.0
 PRICE_PER_M = {  # (input, output) USD per million tokens, list-price assumptions
@@ -72,7 +72,7 @@ def main() -> None:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         w.writeheader(); w.writerows(rows)
     gm = (arpu - cogs_per_customer - arpu * PAYMENT_FEE) / arpu
-    md = f"""# Munshi: business plan inputs (for cfo.ai)
+    md = f"""# Munshi: business plan
 
 **Built from measured usage**: the model tokens of the traced v2 evidence close (`runs/evidence/close-v2/run.json`),
 priced at public list prices (assumption). The neatlogs dashboard shows the actual cost per traced close.
@@ -102,7 +102,7 @@ Fixed costs ₹{sum(FIXED_MONTHLY_INR.values()):,}/month: {", ".join(f"{k} ₹{v
 """ + "\n".join(f"| {n} | {SCENARIOS[n]['start']} | {SCENARIOS[n]['monthly_growth']:.0%} | {s['breakeven_month']} | {s['month18_customers']:,} | ₹{s['month18_cash']:,} |"
                 for n, s in summary.items()) + """
 
-Full month-by-month table: `business_plan_inputs.csv` (load into cfo.ai as the driver table).
+Full month-by-month table: `business_plan_inputs.csv`.
 """
     (OUT / "business_plan.md").write_text(md, encoding="utf-8")
     print(md)

@@ -1,0 +1,13 @@
+{
+ "version": "v1",
+ "seconds": 40.3,
+ "llm_usage": {
+  "claude-sonnet-4.6": {
+   "calls": 23,
+   "prompt": 10762,
+   "completion": 2299
+  }
+ },
+ "finished_at": "2026-10-11T02:37:24",
+ "out_dir": "runs\\evidence\\close-v1"
+}

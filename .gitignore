@@ -18,5 +18,5 @@ data/raw/
 
 # Benchmark images are rebuilt by scripts/extract_sroie.py
 data/benchmark/sroie/images/
-runs/
-ledgers/
+/runs/
+/ledgers/

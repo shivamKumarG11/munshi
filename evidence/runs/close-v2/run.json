@@ -1,0 +1,23 @@
+{
+ "version": "v2",
+ "seconds": 50.4,
+ "llm_usage": {
+  "claude-haiku": {
+   "calls": 18,
+   "prompt": 4958,
+   "completion": 1623
+  },
+  "claude-sonnet-4.6": {
+   "calls": 1,
+   "prompt": 371,
+   "completion": 146
+  },
+  "nova-lite": {
+   "calls": 2,
+   "prompt": 1909,
+   "completion": 267
+  }
+ },
+ "finished_at": "2026-10-11T02:38:16",
+ "out_dir": "runs\\evidence\\close-v2"
+}

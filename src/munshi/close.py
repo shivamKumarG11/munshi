@@ -330,7 +330,7 @@ def _save(out_dir, version, ledger_text, entries, facts, brief, actions, m, peri
     (out_dir / "facts.json").write_text(json.dumps(facts, indent=1, default=str), encoding="utf-8")
     (out_dir / "brief.md").write_text(brief, encoding="utf-8")
     (out_dir / "actions.json").write_text(json.dumps(actions, indent=1, default=str), encoding="utf-8")
-    _actuals_csv(out_dir / "actuals_for_cfo_ai.csv", entries, period_end, m["business"]["name"])
+    _actuals_csv(out_dir / "monthly_actuals.csv", entries, period_end, m["business"]["name"])
     run = {"version": version, "seconds": round(time.time() - t0, 1), "llm_usage": llm.usage,
            "finished_at": datetime.now().isoformat(timespec="seconds"), "out_dir": str(out_dir)}
     (out_dir / "run.json").write_text(json.dumps(run, indent=1), encoding="utf-8")
@@ -338,7 +338,7 @@ def _save(out_dir, version, ledger_text, entries, facts, brief, actions, m, peri
 
 
 def _actuals_csv(path: Path, entries: list[Entry], period_end: date, business: str) -> None:
-    """Monthly actuals by account (ex-tax), the shape cfo.ai's CSV upload expects: one row per line item."""
+    """Monthly actuals by account (ex-tax), one row per line item, ready for any planning tool or spreadsheet."""
     totals: dict[str, Decimal] = {}
     for e in entries:
         if e.account.startswith(("Income", "Expenses")):

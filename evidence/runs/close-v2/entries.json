@@ -1,0 +1,299 @@
+[
+ {
+  "bank_txn_id": "B07",
+  "date": "2026-09-06",
+  "payee": "UPI-CLOUDNEST HOSTING-CNINV20419",
+  "narration": "Managed hosting services and daily backups are core hosting infrastructure costs for client sites.",
+  "account": "Expenses:Hosting",
+  "amount": "-8850.0",
+  "tax": "1350.0",
+  "document_ids": [
+   "D01"
+  ],
+  "decided_by": "llm:claude-haiku",
+  "confidence": 0.95,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B01",
+  "date": "2026-09-01",
+  "payee": "NEFT-KORAMANGALA WORKSPACES LLP-KW2026 0912",
+  "narration": "This is a monthly office rent payment for workspace with allocated seats.",
+  "account": "Expenses:Rent",
+  "amount": "-59000.0",
+  "tax": "9000.0",
+  "document_ids": [
+   "D03"
+  ],
+  "decided_by": "llm:claude-haiku",
+  "confidence": 0.99,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B13",
+  "date": "2026-09-14",
+  "payee": "BBPS-METRO POWER DIST-7731902",
+  "narration": "Electricity bill from power distribution company is a utility expense.",
+  "account": "Expenses:Utilities",
+  "amount": "-4820.0",
+  "tax": "0",
+  "document_ids": [
+   "D04"
+  ],
+  "decided_by": "llm:claude-haiku",
+  "confidence": 0.99,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B09",
+  "date": "2026-09-09",
+  "payee": "POS INTL PIXELFORGE PTE SINGAPORE",
+  "narration": "Pixelforge Pro is a design software subscription with a monthly recurring charge.",
+  "account": "Expenses:Software",
+  "amount": "-2950.0",
+  "tax": "0",
+  "document_ids": [
+   "D05"
+  ],
+  "decided_by": "llm:claude-haiku",
+  "confidence": 0.95,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B17",
+  "date": "2026-09-19",
+  "payee": "UPI-PRINTWORKS STUDIO-PWS1177",
+  "narration": "This is a printing vendor invoice for branded booklets and lamination services, which are core printing expenses. | vendor bill total printed as 6100.0; paid correct amount",
+  "account": "Expenses:Printing",
+  "amount": "-5900.00",
+  "tax": "900.0",
+  "document_ids": [
+   "D06"
+  ],
+  "decided_by": "llm:claude-haiku",
+  "confidence": 0.95,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B19",
+  "date": "2026-09-22",
+  "payee": "UPI-UDUPI GRAND RESTAURANT",
+  "narration": "Team lunch with beverages is a meal expense for employees.",
+  "account": "Expenses:Meals",
+  "amount": "-2450.00",
+  "tax": "0",
+  "document_ids": [
+   "D07"
+  ],
+  "decided_by": "llm:claude-haiku",
+  "confidence": 0.95,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B14",
+  "date": "2026-09-15",
+  "payee": "UPI-BRIGHTLINE STATIONERS",
+  "narration": "Sketch pads and markers are office supplies for business use.",
+  "account": "Expenses:Office-Supplies",
+  "amount": "-1180.00",
+  "tax": "0",
+  "document_ids": [
+   "D08"
+  ],
+  "decided_by": "llm:claude-haiku",
+  "confidence": 0.95,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B06",
+  "date": "2026-09-04",
+  "payee": "SKYLINE FIBERNET AUTOPAY SFN88213",
+  "narration": "Monthly business broadband service subscription is a direct internet connectivity expense.",
+  "account": "Expenses:Internet",
+  "amount": "-2358.82",
+  "tax": "359.82",
+  "document_ids": [
+   "D09"
+  ],
+  "decided_by": "llm:claude-haiku",
+  "confidence": 0.95,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B02",
+  "date": "2026-09-02",
+  "payee": "NEFT CR-ACME RETAIL PVT LTD-INV KAV-2026-031",
+  "narration": "Client payment for KAV-2026-031",
+  "account": "Income:Services",
+  "amount": "118000.00",
+  "tax": "18000.00",
+  "document_ids": [
+   "KAV-2026-031"
+  ],
+  "decided_by": "match:issued-invoices",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B03",
+  "date": "2026-09-03",
+  "payee": "SAL SEP-ANANYA RAO",
+  "narration": "Salaries (rule:salary)",
+  "account": "Expenses:Salaries",
+  "amount": "-72000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "rule:salary",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B04",
+  "date": "2026-09-03",
+  "payee": "SAL SEP-VIKRAM NAIR",
+  "narration": "Salaries (rule:salary)",
+  "account": "Expenses:Salaries",
+  "amount": "-65000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "rule:salary",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B05",
+  "date": "2026-09-03",
+  "payee": "SAL SEP-MEERA IYER",
+  "narration": "Salaries (rule:salary)",
+  "account": "Expenses:Salaries",
+  "amount": "-58000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "rule:salary",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B08",
+  "date": "2026-09-08",
+  "payee": "RZP*NOTION LABS 88213",
+  "narration": "Notion: Notion is a software subscription service used for workspace organization and project management, a standard business tool.",
+  "account": "Expenses:Software",
+  "amount": "-2950.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "crustdata+llm:claude-haiku",
+  "confidence": 0.95,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B10",
+  "date": "2026-09-10",
+  "payee": "GST PMT CHALLAN CPIN 2608290012",
+  "narration": "Collected (rule:gst-payment)",
+  "account": "Liabilities:Tax:Collected",
+  "amount": "-31000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "rule:gst-payment",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B11",
+  "date": "2026-09-11",
+  "payee": "IMPS-R SHARMA-ILLUSTRATIONS",
+  "narration": "Freelance illustrator for the Nimbus app",
+  "account": "Expenses:Contractors",
+  "amount": "-12000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "owner",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B12",
+  "date": "2026-09-12",
+  "payee": "NEFT CR-ZENITH FOODS PVT LTD-PART PMT 033",
+  "narration": "Client payment for KAV-2026-033 (partial: 38500.00 still open on KAV-2026-033)",
+  "account": "Income:Services",
+  "amount": "50000.00",
+  "tax": "7627.12",
+  "document_ids": [
+   "KAV-2026-033"
+  ],
+  "decided_by": "match:issued-invoices",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B15",
+  "date": "2026-09-16",
+  "payee": "RFND PIXELFORGE PTE SINGAPORE",
+  "narration": "Refund from vendor (reverses B09)",
+  "account": "Expenses:Software",
+  "amount": "590.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "rule:refund-of:B09",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B16",
+  "date": "2026-09-18",
+  "payee": "NEFT CR-NIMBUS HEALTH PVT LTD-KAV034 035 036",
+  "narration": "Client payment for KAV-2026-034, KAV-2026-035, KAV-2026-036",
+  "account": "Income:Services",
+  "amount": "236000.00",
+  "tax": "36000.00",
+  "document_ids": [
+   "KAV-2026-034",
+   "KAV-2026-035",
+   "KAV-2026-036"
+  ],
+  "decided_by": "match:issued-invoices",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B18",
+  "date": "2026-09-21",
+  "payee": "NETFLIX.COM SUBSCRIPTION",
+  "narration": "Personal, my mistake",
+  "account": "Equity:Owner-Drawings",
+  "amount": "-649.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "owner",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B20",
+  "date": "2026-09-30",
+  "payee": "SMS ALERT CHGS SEP",
+  "narration": "Bank-Charges (rule:bank-charges)",
+  "account": "Expenses:Bank-Charges",
+  "amount": "-59.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "rule:bank-charges",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B21",
+  "date": "2026-09-30",
+  "payee": "INT CR SWEEP FD",
+  "narration": "Interest (rule:interest)",
+  "account": "Income:Interest",
+  "amount": "1312.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "rule:interest",
+  "confidence": 1.0,
+  "trace": null
+ }
+]

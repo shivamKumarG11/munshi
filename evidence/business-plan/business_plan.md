@@ -1,4 +1,4 @@
-# Munshi: business plan inputs (for cfo.ai)
+# Munshi: business plan
 
 **Built from measured usage**: the model tokens of the traced v2 evidence close (`runs/evidence/close-v2/run.json`),
 priced at public list prices (assumption). The neatlogs dashboard shows the actual cost per traced close.
@@ -28,4 +28,4 @@ Fixed costs ₹153,000/month: founder stipends (2) ₹120,000, tools & hosting b
 | Base | 20 | 15% | 13 | 215 | ₹995,107 |
 | Growth | 40 | 25% | 6 | 1,776 | ₹11,679,257 |
 
-Full month-by-month table: `business_plan_inputs.csv` (load into cfo.ai as the driver table).
+Full month-by-month table: `business_plan_inputs.csv`.

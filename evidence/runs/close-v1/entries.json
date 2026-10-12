@@ -1,0 +1,306 @@
+[
+ {
+  "bank_txn_id": "B07",
+  "date": "2026-09-06",
+  "payee": "UPI-CLOUDNEST HOSTING-CNINV20419",
+  "narration": "CloudNest Hosting Pvt Ltd",
+  "account": "Expenses:Hosting",
+  "amount": "-8850.0",
+  "tax": "1350.0",
+  "document_ids": [
+   "D01"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B07",
+  "date": "2026-09-06",
+  "payee": "UPI-CLOUDNEST HOSTING-CNINV20419",
+  "narration": "CloudNest Hosting Pvt Ltd",
+  "account": "Expenses:Hosting",
+  "amount": "-8850.0",
+  "tax": "1350.0",
+  "document_ids": [
+   "D02"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B01",
+  "date": "2026-09-01",
+  "payee": "NEFT-KORAMANGALA WORKSPACES LLP-KW2026 0912",
+  "narration": "Koramangala Workspaces LLP",
+  "account": "Expenses:Rent",
+  "amount": "-59000.0",
+  "tax": "9000.0",
+  "document_ids": [
+   "D03"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B13",
+  "date": "2026-09-14",
+  "payee": "BBPS-METRO POWER DIST-7731902",
+  "narration": "Metro Power Distribution Co",
+  "account": "Expenses:Utilities",
+  "amount": "-4820.0",
+  "tax": "0",
+  "document_ids": [
+   "D04"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B09",
+  "date": "2026-09-09",
+  "payee": "POS INTL PIXELFORGE PTE SINGAPORE",
+  "narration": "Pixelforge Design Tools Pte Ltd",
+  "account": "Expenses:Software",
+  "amount": "-2950.0",
+  "tax": "0",
+  "document_ids": [
+   "D05"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B17",
+  "date": "2026-09-19",
+  "payee": "UPI-PRINTWORKS STUDIO-PWS1177",
+  "narration": "PrintWorks Studio",
+  "account": "Expenses:Printing",
+  "amount": "-6100.0",
+  "tax": "900.0",
+  "document_ids": [
+   "D06"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B19",
+  "date": "2026-09-22",
+  "payee": "UPI-UDUPI GRAND RESTAURANT",
+  "narration": "Udupi Grand Restaurant",
+  "account": "Expenses:Meals",
+  "amount": "-2450.0",
+  "tax": "0",
+  "document_ids": [
+   "D07"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B14",
+  "date": "2026-09-15",
+  "payee": "UPI-BRIGHTLINE STATIONERS",
+  "narration": "Brightline Stationers",
+  "account": "Expenses:Office-Supplies",
+  "amount": "-1180.0",
+  "tax": "180.0",
+  "document_ids": [
+   "D08"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B06",
+  "date": "2026-09-04",
+  "payee": "SKYLINE FIBERNET AUTOPAY SFN88213",
+  "narration": "Skyline Fibernet Pvt Ltd",
+  "account": "Expenses:Internet",
+  "amount": "-2358.82",
+  "tax": "359.82",
+  "document_ids": [
+   "D09"
+  ],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B02",
+  "date": "2026-09-02",
+  "payee": "NEFT CR-ACME RETAIL PVT LTD-INV KAV-2026-031",
+  "narration": "NEFT credit received from ACME Retail Pvt Ltd referencing invoice KAV-2026-031, indicating payment received for services rendered.",
+  "account": "Income:Services",
+  "amount": "118000.00",
+  "tax": "18000.00",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B03",
+  "date": "2026-09-03",
+  "payee": "SAL SEP-ANANYA RAO",
+  "narration": "Transaction reference 'SAL SEP' indicates a salary payment for September, and 'ANANYA RAO' is the employee name.",
+  "account": "Expenses:Salaries",
+  "amount": "-72000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B04",
+  "date": "2026-09-03",
+  "payee": "SAL SEP-VIKRAM NAIR",
+  "narration": "Payment description includes 'SAL' (salary) and a person's name (Vikram Nair) with 'SEP' indicating September payroll.",
+  "account": "Expenses:Salaries",
+  "amount": "-65000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B05",
+  "date": "2026-09-03",
+  "payee": "SAL SEP-MEERA IYER",
+  "narration": "Payment description 'SAL SEP' indicates a salary payment for September, to Meera Iyer, an employee.",
+  "account": "Expenses:Salaries",
+  "amount": "-58000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B08",
+  "date": "2026-09-08",
+  "payee": "RZP*NOTION LABS 88213",
+  "narration": "Notion Labs is a software-as-a-service (SaaS) productivity and note-taking application, making this a software subscription expense.",
+  "account": "Expenses:Software",
+  "amount": "-2950.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B10",
+  "date": "2026-09-10",
+  "payee": "GST PMT CHALLAN CPIN 2608290012",
+  "narration": "GST payment challan (CPIN) indicates a Goods and Services Tax remittance to the government, which reduces the GST liability collected from customers.",
+  "account": "Liabilities:Tax:Collected",
+  "amount": "-31000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B11",
+  "date": "2026-09-11",
+  "payee": "IMPS-R SHARMA-ILLUSTRATIONS",
+  "narration": "Payment to R Sharma for illustrations, which is a freelance/contractor service for creative/design work.",
+  "account": "Expenses:Contractors",
+  "amount": "-12000.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B12",
+  "date": "2026-09-12",
+  "payee": "NEFT CR-ZENITH FOODS PVT LTD-PART PMT 033",
+  "narration": "NEFT credit received from Zenith Foods Pvt Ltd described as a part payment (installment 033), indicating a client payment for services rendered.",
+  "account": "Income:Services",
+  "amount": "50000.00",
+  "tax": "7627.12",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B15",
+  "date": "2026-09-16",
+  "payee": "RFND PIXELFORGE PTE SINGAPORE",
+  "narration": "Refund from PixelForge Pte, a Singapore-based company likely providing design or development contracting services, reversing a prior contractor expense.",
+  "account": "Expenses:Contractors",
+  "amount": "590.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B16",
+  "date": "2026-09-18",
+  "payee": "NEFT CR-NIMBUS HEALTH PVT LTD-KAV034 035 036",
+  "narration": "NEFT credit received from Nimbus Health Pvt Ltd, indicating payment received for services rendered to a client.",
+  "account": "Income:Services",
+  "amount": "236000.00",
+  "tax": "36000.00",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B18",
+  "date": "2026-09-21",
+  "payee": "NETFLIX.COM SUBSCRIPTION",
+  "narration": "Netflix is a streaming/subscription service, most likely used for office entertainment or content purposes, categorised as a software/subscription expense.",
+  "account": "Expenses:Software",
+  "amount": "-649.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B20",
+  "date": "2026-09-30",
+  "payee": "SMS ALERT CHGS SEP",
+  "narration": "SMS alert charges are a bank service fee charged for transaction notification services.",
+  "account": "Expenses:Bank-Charges",
+  "amount": "-59.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ },
+ {
+  "bank_txn_id": "B21",
+  "date": "2026-09-30",
+  "payee": "INT CR SWEEP FD",
+  "narration": "INT CR indicates an interest credit, and SWEEP FD refers to a sweep fund, which is a cash management account that earns interest on idle funds.",
+  "account": "Income:Interest",
+  "amount": "1312.00",
+  "tax": "0",
+  "document_ids": [],
+  "decided_by": "llm:claude-sonnet-4.6",
+  "confidence": 1.0,
+  "trace": null
+ }
+]

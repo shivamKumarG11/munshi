@@ -1,5 +1,7 @@
 # Munshi: your business's personal CA (idea pack, for review)
 
+> **Update (build): cfo.ai was dropped from the build (its signup requires a payment card). References to it below are from the original plan.**
+>
 > **Status:** DRAFT v3 FOR REVIEW · 2026-10-11 · nothing built yet · **solo build**
 > **Hackathon:** neatHack ([../../hackathon.md](../../hackathon.md)) · submissions Mon Oct 12, 7:00–11:55 PM IST
 

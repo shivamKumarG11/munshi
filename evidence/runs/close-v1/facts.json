@@ -1,0 +1,29 @@
+{
+ "balanced": false,
+ "bank_gap": "-9050.00",
+ "tax": {
+  "assumptions": {
+   "gst_rate": "0.18",
+   "income_tax_provision_rate": "0.25",
+   "non_claimable": [
+    "Expenses:Meals"
+   ]
+  },
+  "output_tax_collected": "61627.12",
+  "input_tax_claimable": "13139.82",
+  "net_indirect_tax": "48487.30",
+  "revenue_ex_tax": "343684.88",
+  "expenses_ex_tax": "293487.00",
+  "profit": "50197.88",
+  "income_tax_provision": "12549.47",
+  "set_aside": "61036.77"
+ },
+ "questions": [],
+ "gap_hunt": [],
+ "duplicates": [],
+ "partial_payments": [],
+ "vendor_errors": [],
+ "open_invoices": [],
+ "opening_balance": "650000.00",
+ "closing_balance": "726735.18"
+}

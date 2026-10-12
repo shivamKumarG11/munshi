@@ -1,0 +1,36 @@
+{
+ "version": "v1",
+ "balanced": false,
+ "bank_gap": "-9050.00",
+ "categorisation_accuracy": 0.905,
+ "exact_entries": 0.81,
+ "duplicate_posts": 1,
+ "traps_caught": 2,
+ "traps_total": 12,
+ "traps": {
+  "T01 duplicate upload detected": false,
+  "T02 missing bill flagged (not claimable)": false,
+  "T03 one payment \u2192 three invoices": false,
+  "T04 partial payment, 38,500 open": false,
+  "T05 refund reduces Software": false,
+  "T06 cryptic payee \u2192 Software": true,
+  "T07 blurry receipt read (1,180)": true,
+  "T08 vendor arithmetic error flagged": false,
+  "T09 un-invoiced work \u2192 invoice drafted": false,
+  "T10 overdue invoice \u2192 reminder": false,
+  "T11 books balance to the bank": false,
+  "T12 personal expense not booked as business": false
+ },
+ "net_indirect_tax_correct": false,
+ "net_indirect_tax": "48487.30",
+ "expected_net_indirect_tax": "50017.30",
+ "brief_unsupported_figures": [],
+ "brief_states_true_profit": false,
+ "true_profit": 58367,
+ "llm_calls": 23,
+ "llm_tokens": 13061,
+ "seconds": 40.3,
+ "models": [
+  "claude-sonnet-4.6"
+ ]
+}

@@ -40,7 +40,7 @@ The demo month contains 12 planted traps a good accountant must catch (see `data
 | --- | --- | --- |
 | **neatlogs** | Every close is one traced session (business = end user): every model call, tool call (bank parser, Crustdata, EDGAR, Dodo, ledger check), gap hunt and recovery. v1's failures were found in the traces and fixed in v2 | [`evidence/neatlogs/`](evidence/neatlogs/) |
 | **Entire** | Checkpoints on every commit since setup (Claude Code sessions behind each change); the books themselves are versioned in Git, the same "why is this line here?" idea applied to accounting | [`evidence/entire/`](evidence/entire/) |
-| **cfo.ai** | Munshi's own business plan: pricing, cost per close (from measured model usage), revenue, runway, 18-month scenarios, prepared as a cfo.ai driver table; each closed month's actuals export as a cfo.ai-ready CSV. *(cfo.ai workspace access pending: the signup needs a card; asked the organisers)* | [`evidence/cfo-ai/`](evidence/cfo-ai/) |
+| **Business plan** | Munshi's own pricing, cost per close (from measured model usage), revenue and runway, 18-month scenarios; each closed month's actuals export as CSV | [`evidence/business-plan/`](evidence/business-plan/) |
 | **Dodo Payments** | Payment links on invoices Munshi drafts (test mode); our own usage billing in the plan | `runs/evidence/close-v2/actions.json` |
 | **Crustdata** | Resolves cryptic bank narrations (`RZP*NOTION LABS`) to real companies before categorising | traces (`crustdata_resolve_company`) |
 | **SEC EDGAR** | Real peer companies and their filed ratios, every figure cited to its filing | Research tab, `facts.json` |

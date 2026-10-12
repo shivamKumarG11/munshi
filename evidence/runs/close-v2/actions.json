@@ -1,0 +1,46 @@
+{
+ "invoices": [
+  {
+   "type": "invoice",
+   "client": "Zenith Foods Pvt Ltd",
+   "project": "Packaging design sprint",
+   "hours": "40",
+   "subtotal": "80000.00",
+   "tax": "14400.00",
+   "total": "94400.00",
+   "number": "KAV-2026-DRAFT-01",
+   "dodo": {
+    "product_id": "pdt_0NpSfL6cTnj0RlRoHCP8q",
+    "session_id": "cks_0NpSfL984wp1Ik9Y6uYvK",
+    "checkout_url": "https://test.checkout.dodopayments.com/session/cks_0NpSfL984wp1Ik9Y6uYvK",
+    "amount": "94400.00"
+   }
+  }
+ ],
+ "reminders": [
+  {
+   "type": "reminder",
+   "invoice": "KAV-2026-029",
+   "client": "Orbit Logistics Pvt Ltd",
+   "open": "141600.00",
+   "days_overdue": 43,
+   "tone": "firm"
+  },
+  {
+   "type": "reminder",
+   "invoice": "KAV-2026-033",
+   "client": "Zenith Foods Pvt Ltd",
+   "open": "38500.00",
+   "days_overdue": 18,
+   "tone": "polite"
+  }
+ ],
+ "missing_bills": [
+  {
+   "type": "missing_bill",
+   "bank_txn_id": "B08",
+   "payee": "RZP*NOTION LABS 88213",
+   "amount": "2950.00"
+  }
+ ]
+}

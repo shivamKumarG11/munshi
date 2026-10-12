@@ -1,0 +1,197 @@
+option "operating_currency" "INR"
+
+2026-08-31 open Assets:Bank:Current
+2026-08-31 open Assets:Tax:Input-Credit
+2026-08-31 open Equity:Opening-Balances
+2026-08-31 open Expenses:Bank-Charges
+2026-08-31 open Expenses:Contractors
+2026-08-31 open Expenses:Hosting
+2026-08-31 open Expenses:Internet
+2026-08-31 open Expenses:Meals
+2026-08-31 open Expenses:Office-Supplies
+2026-08-31 open Expenses:Printing
+2026-08-31 open Expenses:Rent
+2026-08-31 open Expenses:Salaries
+2026-08-31 open Expenses:Software
+2026-08-31 open Expenses:Utilities
+2026-08-31 open Income:Interest
+2026-08-31 open Income:Services
+2026-08-31 open Liabilities:Tax:Collected
+
+2026-08-31 * "Opening balance"
+  Assets:Bank:Current  650000.00 INR
+  Equity:Opening-Balances
+
+2026-09-01 * "NEFT-KORAMANGALA WORKSPACES LLP-KW2026 0912" "Koramangala Workspaces LLP"
+  bank_txn: "B01"
+  documents: "D03"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -59000.0 INR
+  Assets:Tax:Input-Credit  9000.0 INR
+  Expenses:Rent  50000.0 INR
+
+2026-09-02 * "NEFT CR-ACME RETAIL PVT LTD-INV KAV-2026-031" "NEFT credit received from ACME Retail Pvt Ltd referencing invoice KAV-2026-031, indicating payment received for services rendered."
+  bank_txn: "B02"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  118000.00 INR
+  Liabilities:Tax:Collected  -18000.00 INR
+  Income:Services  -100000.00 INR
+
+2026-09-03 * "SAL SEP-ANANYA RAO" "Transaction reference 'SAL SEP' indicates a salary payment for September, and 'ANANYA RAO' is the employee name."
+  bank_txn: "B03"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -72000.00 INR
+  Expenses:Salaries  72000.00 INR
+
+2026-09-03 * "SAL SEP-VIKRAM NAIR" "Payment description includes 'SAL' (salary) and a person's name (Vikram Nair) with 'SEP' indicating September payroll."
+  bank_txn: "B04"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -65000.00 INR
+  Expenses:Salaries  65000.00 INR
+
+2026-09-03 * "SAL SEP-MEERA IYER" "Payment description 'SAL SEP' indicates a salary payment for September, to Meera Iyer, an employee."
+  bank_txn: "B05"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -58000.00 INR
+  Expenses:Salaries  58000.00 INR
+
+2026-09-04 * "SKYLINE FIBERNET AUTOPAY SFN88213" "Skyline Fibernet Pvt Ltd"
+  bank_txn: "B06"
+  documents: "D09"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -2358.82 INR
+  Assets:Tax:Input-Credit  359.82 INR
+  Expenses:Internet  1999.00 INR
+
+2026-09-06 * "UPI-CLOUDNEST HOSTING-CNINV20419" "CloudNest Hosting Pvt Ltd"
+  bank_txn: "B07"
+  documents: "D01"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -8850.0 INR
+  Assets:Tax:Input-Credit  1350.0 INR
+  Expenses:Hosting  7500.0 INR
+
+2026-09-06 * "UPI-CLOUDNEST HOSTING-CNINV20419" "CloudNest Hosting Pvt Ltd"
+  bank_txn: "B07"
+  documents: "D02"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -8850.0 INR
+  Assets:Tax:Input-Credit  1350.0 INR
+  Expenses:Hosting  7500.0 INR
+
+2026-09-08 * "RZP*NOTION LABS 88213" "Notion Labs is a software-as-a-service (SaaS) productivity and note-taking application, making this a software subscription expense."
+  bank_txn: "B08"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -2950.00 INR
+  Expenses:Software  2950.00 INR
+
+2026-09-09 * "POS INTL PIXELFORGE PTE SINGAPORE" "Pixelforge Design Tools Pte Ltd"
+  bank_txn: "B09"
+  documents: "D05"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -2950.0 INR
+  Expenses:Software  2950.0 INR
+
+2026-09-10 * "GST PMT CHALLAN CPIN 2608290012" "GST payment challan (CPIN) indicates a Goods and Services Tax remittance to the government, which reduces the GST liability collected from customers."
+  bank_txn: "B10"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -31000.00 INR
+  Liabilities:Tax:Collected  31000.00 INR
+
+2026-09-11 * "IMPS-R SHARMA-ILLUSTRATIONS" "Payment to R Sharma for illustrations, which is a freelance/contractor service for creative/design work."
+  bank_txn: "B11"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -12000.00 INR
+  Expenses:Contractors  12000.00 INR
+
+2026-09-12 * "NEFT CR-ZENITH FOODS PVT LTD-PART PMT 033" "NEFT credit received from Zenith Foods Pvt Ltd described as a part payment (installment 033), indicating a client payment for services rendered."
+  bank_txn: "B12"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  50000.00 INR
+  Liabilities:Tax:Collected  -7627.12 INR
+  Income:Services  -42372.88 INR
+
+2026-09-14 * "BBPS-METRO POWER DIST-7731902" "Metro Power Distribution Co"
+  bank_txn: "B13"
+  documents: "D04"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -4820.0 INR
+  Expenses:Utilities  4820.0 INR
+
+2026-09-15 * "UPI-BRIGHTLINE STATIONERS" "Brightline Stationers"
+  bank_txn: "B14"
+  documents: "D08"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -1180.0 INR
+  Assets:Tax:Input-Credit  180.0 INR
+  Expenses:Office-Supplies  1000.0 INR
+
+2026-09-16 * "RFND PIXELFORGE PTE SINGAPORE" "Refund from PixelForge Pte, a Singapore-based company likely providing design or development contracting services, reversing a prior contractor expense."
+  bank_txn: "B15"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  590.00 INR
+  Expenses:Contractors  -590.00 INR
+
+2026-09-18 * "NEFT CR-NIMBUS HEALTH PVT LTD-KAV034 035 036" "NEFT credit received from Nimbus Health Pvt Ltd, indicating payment received for services rendered to a client."
+  bank_txn: "B16"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  236000.00 INR
+  Liabilities:Tax:Collected  -36000.00 INR
+  Income:Services  -200000.00 INR
+
+2026-09-19 * "UPI-PRINTWORKS STUDIO-PWS1177" "PrintWorks Studio"
+  bank_txn: "B17"
+  documents: "D06"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -6100.0 INR
+  Assets:Tax:Input-Credit  900.0 INR
+  Expenses:Printing  5200.0 INR
+
+2026-09-21 * "NETFLIX.COM SUBSCRIPTION" "Netflix is a streaming/subscription service, most likely used for office entertainment or content purposes, categorised as a software/subscription expense."
+  bank_txn: "B18"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -649.00 INR
+  Expenses:Software  649.00 INR
+
+2026-09-22 * "UPI-UDUPI GRAND RESTAURANT" "Udupi Grand Restaurant"
+  bank_txn: "B19"
+  documents: "D07"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -2450.0 INR
+  Expenses:Meals  2450.0 INR
+
+2026-09-30 * "SMS ALERT CHGS SEP" "SMS alert charges are a bank service fee charged for transaction notification services."
+  bank_txn: "B20"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  -59.00 INR
+  Expenses:Bank-Charges  59.00 INR
+
+2026-09-30 * "INT CR SWEEP FD" "INT CR indicates an interest credit, and SWEEP FD refers to a sweep fund, which is a cash management account that earns interest on idle funds."
+  bank_txn: "B21"
+  decided_by: "llm:claude-sonnet-4.6"
+  confidence: "1.00"
+  Assets:Bank:Current  1312.00 INR
+  Income:Interest  -1312.00 INR
+
+2026-10-01 balance Assets:Bank:Current  726735.18 INR
