@@ -1,25 +1,31 @@
-# Demo video script (≤ 3:00)
+# Demo video script (≤ 3:00): organisers' brief
 
-**Setup before recording**
-- `uv run streamlit run app/streamlit_app.py` → open http://localhost:8501, browser at 100% zoom, 1440 px wide.
-- Pick **Studio Kaveri** (fresh start). Keep these tabs ready: the neatlogs dashboard (Traces), entire.io (or a
-  terminal in the repo), and the GitHub repo.
-- Record at 1080p, captions on. Say once, plainly: *"The demo business is generated; the reader is benchmarked on
-  real receipts."*
+The organisers asked for ONE video covering: **(1) the problem**, **(2) how cfo.ai and Entire were part of the
+project**, **(3) how neatlogs was used to identify and resolve the incidents your agent ran into** (their
+"critical incidents" feature; watch their how-to video linked in Discord before recording).
 
-| Time | Screen | What to say |
+## Prepare (10 min)
+- App: http://localhost:8501 (Studio Kaveri selected, fresh).
+- **neatlogs dashboard** (app.neatlogs.com → your project): open **Incidents** (and Detections / Traces). Find the
+  incidents for: the **503 "no available channel"** model outage, the **"temperature is deprecated"** errors, and
+  the v1 close session `close-studio-kaveri-2026-09-v1-023643` (books off by ₹9,050). If Incidents is empty, follow
+  the organisers' how-to video to file one from the failing traces.
+- A terminal in the repo for Entire: `entire status` and
+  `entire graph search --query "where does munshi repair gaps between the ledger and the bank" --format text --top-k 3`.
+- `evidence/results.md` open in the browser (GitHub) for the before/after table.
+
+## Script
+| Time | Screen | Say |
 | --- | --- | --- |
-| **0:00–0:15** | **1 · Your month**: the category tiles; click **View large** on `printworks-studio-0917.pdf` | "Every business has a CA it can't afford to call every day. This is month-end for a small design studio: 21 bank lines, 9 bills and receipt photos, invoices, a timesheet. Meet Munshi." |
-| **0:15–0:25** | Open the **🏢 business picker** briefly (3 samples + New business), close it, click **Hand it to the team →** | "You pick a business, or start your own, and hand the month to the team." |
-| **0:25–1:20** | **2 · The office**: the line of workers lights up left to right | "Riya finds real peer companies in SEC filings. Arjun reads every bill. The totals are re-added in code, and he catches a vendor whose bill doesn't add up. Meena categorises every bank line; a cryptic `RZP*NOTION` gets looked up in Crustdata. Then Dev checks the books against the bank: **off by ₹9,050**. He doesn't fudge it. He finds a bill uploaded twice and the vendor's wrong total, fixes both, re-checks: **₹0**." |
-| **1:20–1:40** | Results row → **Approve** the Zenith invoice → **Pay link** (Dodo) | "Profit, tax to set aside from your settings, what clients owe. Sana drafted an invoice for work nobody billed. One click, and there's a Dodo payment link. Nothing goes out without the owner's OK." |
-| **1:40–2:00** | **+ Something new arrived** → **Use this sample's late files** → the **What changed** panel | "Then real life: a late bill and a client payment arrive. Munshi remembers everything it did; only the affected workers react. Here's exactly what changed: Orbit paid, the reminder is gone, profit updated." |
-| **2:00–2:15** | **Ask Munshi** → "Who owes me?" | "And the owner can just ask. Answers come only from the closed books." |
-| **2:15–2:35** | **neatlogs** dashboard: the close session (gap hunt + Sonnet re-read) | "Every step is a trace in neatlogs. Our first version was off by ₹9,050, caught 2 of 12 traps and told the owner the wrong profit. We found why in these traces and fixed it." |
-| **2:35–2:50** | **3 · Books & proof**: tap the Notion row (Why this entry) + proof tiles; flash `entire why`/checkpoint or the graph output | "Every entry has a reason and the worker who decided it. Now: 12 of 12 traps, ₹0 off the bank, 29% fewer tokens, better on 40 real scanned receipts. The code's history lives in Entire; the books themselves are versioned in Git." |
-| **2:50–3:00** | Back to the office line, all ✓ | "Munshi: your books. Closed. Proven." |
+| **0:00–0:20** | **1 · Your month**: category tiles, then **View large** on the PrintWorks bill | **Problem.** "Small businesses can't afford a CA every day. At month-end, the owner is left with a bank statement and a pile of bills and receipt photos. Duplicate bills, vendor mistakes, work nobody invoiced and clients who pay late slip through, and the books quietly stop matching the bank." |
+| **0:20–1:05** | **Hand it to the team →** · **2 · The office**: workers light up; Dev's bubble goes "off by ₹9,050" → "₹0"; approve the Zenith invoice → Dodo pay link | **Solution.** "Munshi is an AI CA: six workers close the month. Riya researches real peers in SEC filings, Arjun reads every bill and re-adds the totals in code, Meena categorises every payment, and Crustdata identifies cryptic payees. Dev reconciles against the bank, and he won't stop until it's zero. Here it was off by ₹9,050: a bill uploaded twice and a vendor's wrong total. Found, fixed, re-checked. Then Sana drafts an invoice with a Dodo payment link, and nothing goes out without the owner's OK." |
+| **1:05–1:55** | **neatlogs → Incidents**: open each incident → its trace | **neatlogs: incidents found and resolved.** "neatlogs traced every run, and its incidents showed us where the agent broke. *One:* our first version closed the books ₹9,050 off and told the owner the wrong profit; the trace showed bills were posted with no bank check, so we added reconciliation and a gap hunt. *Two:* today the model provider went down, a 503, and a close stopped mid-run; the trace pinpointed the failing call, so Munshi now retries and switches provider automatically. *Three:* on real scanned receipts the reader crashed on dates like 15/01/2019; fixed, and vendor accuracy went from 52% to 70%. Every fix was verified with a new trace." |
+| **1:55–2:20** | Terminal: `entire status` + the `entire graph search` result | **Entire.** "Entire is enabled on the repo, and our coding agent used entire-graph to find the code to change. Asking 'where does Munshi repair gaps against the bank' lands straight on the gap-hunt function. And the books themselves are versioned in Git: the same 'why is this line here?' idea, applied to accounting." |
+| **2:20–2:35** | `evidence/business-plan/business_plan.md` | **cfo.ai (honest).** "We couldn't get cfo.ai access, because the signup needed a card. So we built Munshi's business plan from costs neatlogs measured: about ₹1.39 of model cost per close, roughly 93% gross margin." |
+| **2:35–2:52** | **3 · Books & proof**: proof tiles; tap the Notion row | **Result.** "Same month, before and after: ₹9,050 off becomes zero, 2 of 12 traps becomes 12 of 12, 29% fewer tokens. And every entry shows the reason and the worker who decided it." |
+| **2:52–3:00** | Back to the office, all ✓ | "Munshi. Your books. Closed. Proven." |
 
-**Backup:** if a live run is slow, record the close once and cut the waiting.
+Say once: *"The demo business is generated; the reader is tested on real receipts."*
 
-**Numbers to quote (all from real runs):** v1 vs v2: ₹9,050 off → ₹0 · traps 2/12 → 12/12 · wrong profit ₹98,685 → true
-₹58,367 · tokens 13,061 → 9,274 · real receipts (vendor / total): 52.5% / 87.5% → 70% / 90%.
+**X limit:** free accounts can attach up to 2:20. Either attach a 2:20 cut (drop the cfo.ai line and shorten the
+solution segment) and put the full video on YouTube in your reply, or attach the full one if your account allows it.
