@@ -41,9 +41,13 @@ CSS = """
 :root { --bg:#0E1613; --tile:#1A2621; --tile2:#22322B; --edge:#0B110E; --ink:#EEF3EF; --muted:#A9B8B0;
         --green:#4FD18B; --green-edge:#2E8F5C; --amber:#F2B84B; --amber-bg:#2E2715; --red:#FF8C7A; --red-bg:#3A1D19; }
 html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] { background: var(--bg) !important; color: var(--ink); }
-[data-testid="stAppViewContainer"] * { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+[data-testid="stAppViewContainer"] p, [data-testid="stAppViewContainer"] div, [data-testid="stAppViewContainer"] span:not([data-testid="stIconMaterial"]),
+[data-testid="stAppViewContainer"] button, [data-testid="stAppViewContainer"] input, [data-testid="stAppViewContainer"] label { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+[data-testid="stIconMaterial"] { font-family: 'Material Symbols Rounded' !important; }
+[data-testid="stDecoration"], [data-testid="stStatusWidget"], [data-testid="stAppDeployButton"], [data-testid="stMainMenu"] { display: none !important; }
+[data-testid="stNavSectionHeader"], [data-testid="stTopNavLinkContainer"] a span { font-size: 15px; }
 [data-testid="stHeader"] { background: transparent; }
-.block-container { padding-top: 1.2rem; max-width: 1240px; }
+.block-container { padding-top: 4.2rem; max-width: 1240px; }
 h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; color: var(--ink) !important; letter-spacing: -0.01em; }
 .mono { font-family: 'IBM Plex Mono', monospace !important; }
 .muted { color: var(--muted); }
@@ -54,7 +58,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; color: var(--i
 .title { font-family:'Space Grotesk',sans-serif; font-size: 38px; font-weight: 700; margin: 6px 0 4px; }
 .sub { font-size: 17px; color: var(--muted); margin: 0 0 18px; }
 .floor-wrap { perspective: 1400px; display:flex; justify-content:center; padding: 30px 0 10px; }
-.floor { transform: rotateX(30deg); transform-style: preserve-3d; display:flex; align-items:flex-end; gap:16px;
+.floor { transform: rotateX(22deg); transform-style: preserve-3d; display:flex; align-items:flex-end; gap:16px;
          padding: 36px 40px 50px; border-radius: 28px; background:#15201C;
          box-shadow: 0 2px 0 #24332D inset, 0 40px 80px rgba(0,0,0,.55); }
 .worker { display:flex; flex-direction:column; align-items:center; gap:9px; width:112px; }
@@ -75,7 +79,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; color: var(--i
         box-shadow:0 22px 34px rgba(0,0,0,.45); }
 .tile.tilt { transform: perspective(1200px) rotateX(8deg); }
 .tile .label { font-size:15px; color:var(--muted); }
-.tile .big { font-family:'IBM Plex Mono',monospace; font-size:36px; margin-top:6px; }
+.tile .big { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:32px; margin-top:6px; white-space:nowrap; }
 .tile.red { background:var(--red-bg); border-bottom-color:#1E0D0B; } .tile.red .big { color:var(--red); }
 .tile.amber { background:var(--amber-bg); border-bottom-color:#17130A; } .tile.amber .big { color:var(--amber); }
 .tile.green { background:var(--green); border-bottom-color:var(--green-edge); color:#0E1613; }
@@ -103,18 +107,21 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; color: var(--i
 .tag.g { background:#22322B; color:#8FE3B5; } .tag.r { background:var(--red-bg); color:var(--red); } .tag.a { background:#3A3018; color:var(--amber); }
 .card .who { font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; margin:12px 0 2px; }
 .card .what { font-size:14px; color:var(--muted); }
-.card .amt { font-family:'IBM Plex Mono',monospace; font-size:32px; margin-top:10px; }
+.card .amt { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:32px; margin-top:10px; }
 .bar { height:12px; border-radius:6px; }
 .vs { display:grid; grid-template-columns:1fr 1fr; gap:24px; perspective:1400px; }
 .vs .side { padding:26px; border-radius:24px; }
 .vs .v1 { background:#2A1714; border-bottom:10px solid #160B09; transform: rotateY(6deg); }
 .vs .v2 { background:var(--green); color:#0E1613; border-bottom:10px solid var(--green-edge); transform: rotateY(-6deg); }
 .vs .nums { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px; }
-.vs .num { font-family:'IBM Plex Mono',monospace; font-size:28px; }
+.vs .num { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:28px; }
 .vs .v1 .num { color:var(--red); } .vs .v1 .cap { color:#F3B4A9; font-size:13px; } .vs .v2 .cap { font-size:13px; font-weight:600; }
 /* Streamlit widgets in the dark theme */
 .stButton > button[kind="primary"] { background: var(--green); color:#0E1613; border:0; font-weight:700; border-radius:14px;
         padding: 0.7rem 1.4rem; box-shadow: 0 6px 0 var(--green-edge); }
+.stButton > button p, [data-testid="stLinkButton"] p { font-size: 16px !important; font-weight: 700 !important; }
+.stButton > button[kind="secondary"] p { font-weight: 500 !important; }
+.spacer { height: 22px; }
 .stButton > button[kind="primary"]:hover { background:#6BDCA0; color:#0E1613; }
 .stButton > button[kind="secondary"] { background: transparent; color: var(--ink); border:1px solid #3A4C45; border-radius:14px; }
 [data-testid="stChatMessage"] { background: #15201C; border-radius: 14px; }
@@ -122,9 +129,8 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; color: var(--i
 </style>
 """
 
-CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0E1613" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>'
-ARROW = ('<svg class="arrow" width="28" height="20" viewBox="0 0 28 20" fill="none" stroke="#4FD18B" stroke-width="2" '
-         'aria-hidden="true"><path d="M2 10h22M18 4l6 6-6 6"/></svg>')
+CHECK_PATH = '<path d="M5 12l5 5L20 7"/>'
+
 
 ICONS = {
     "research": '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',
@@ -146,9 +152,21 @@ WORKERS = [
 ]
 
 
+def svg_img(inner: str, size: int, color: str, stroke: float = 1.8, box: str = "0 0 24 24", cls: str = "") -> str:
+    """Inline SVG is stripped by st.html, so icons are rendered as <img> data URIs."""
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" viewBox="{box}" fill="none" '
+           f'stroke="{color}" stroke-width="{stroke}" stroke-linecap="round" stroke-linejoin="round">{inner}</svg>')
+    uri = "data:image/svg+xml;base64," + base64.b64encode(svg.encode()).decode()
+    return f'<img src="{uri}" width="{size}" height="{size}" alt="" class="{cls}">'
+
+
 def _svg(icon: str, color: str = "#8FE3B5") -> str:
-    return (f'<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="1.8" '
-            f'aria-hidden="true">{ICONS[icon]}</svg>')
+    return svg_img(ICONS[icon], 38, color)
+
+
+CHECK = svg_img(CHECK_PATH, 14, "#0E1613", 3)
+CHECK_BIG = svg_img(CHECK_PATH, 30, "#0E1613", 2.6)
+ARROW = svg_img('<path d="M2 10h22M18 4l6 6-6 6"/>', 28, "#4FD18B", 2, "0 0 28 20", "arrow")
 
 
 def floor(states: dict[str, str] | None = None, final_text: str = "₹0 off", final_on: bool = True) -> str:
@@ -164,7 +182,7 @@ def floor(states: dict[str, str] | None = None, final_text: str = "₹0 off", fi
         parts.append(f'<div class="worker"><div class="{cls}">{_svg(icon, color)}</div>'
                      f'<span class="wname">{name}</span>{badge}</div>')
     final_style = "" if final_on else ' style="opacity:.35"'
-    parts.append(ARROW + f'<div class="worker"{final_style}><div class="block final">{CHECK.replace("14", "30")}'
+    parts.append(ARROW + f'<div class="worker"{final_style}><div class="block final">{CHECK_BIG}'
                  f'<span class="mono" style="font-size:14px">{final_text}</span></div>'
                  f'<span class="wname">Closed books</span><span class="chip"><img src="{LOGO["entire"]}" alt="Entire"></span></div>')
     parts.append("</div></div>")

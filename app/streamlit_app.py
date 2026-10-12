@@ -90,6 +90,7 @@ def home():
 def close_page():
     st.html('<div class="center"><div class="title">Close September 2026</div>'
             '<p class="sub">Six workers, one rule: the books must match the bank.</p></div>')
+    clicked = False if READ_ONLY else center_button("Run the close", key="run-close")
     pills_box, floor_box, feed_box = st.empty(), st.empty(), st.empty()
     done = {k: "done" for k, *_ in ui.WORKERS}
 
@@ -105,7 +106,6 @@ def close_page():
         st.info("Read-only demo: showing the recorded close (neatHack models, traced in neatlogs). "
                 "Run the app locally with API keys to close live.")
     else:
-        clicked = center_button("Run the close", key="run-close")
         if clicked or st.session_state.pop("autostart", False):
             states = {k: "" for k, *_ in ui.WORKERS}
             lines: list[str] = []
@@ -202,18 +202,19 @@ def results_page():
     with right:
         st.html('<div class="title" style="font-size:26px">Ask Munshi</div>')
         history = st.session_state.setdefault("chat", [])
-        box = st.container(height=470, border=True)
+        box = st.container(height=360, border=True)
         with box:
             if not history:
                 st.caption("Ask anything about this month. Answers come only from the closed books.")
             for h in history:
                 st.chat_message("user").write(h["q"])
                 st.chat_message("assistant", avatar="🧾").write(h["a"])
-        suggestions = ["Can I afford a new laptop?", "Who owes me money?", "Why is hosting ₹8,850?"]
+        suggestions = {"Afford a laptop?": "Can I afford a new laptop this month?", "Who owes me?": "Who owes me money?",
+                       "Why ₹8,850 hosting?": "Why is hosting ₹8,850 and not ₹17,700?"}
         picked = None
-        for col, q in zip(st.columns(3), suggestions):
-            if col.button(q, key=f"s-{q}", width="stretch", disabled=READ_ONLY):
-                picked = q
+        for label, full in suggestions.items():
+            if st.button(full, key=f"s-{label}", width="stretch", disabled=READ_ONLY):
+                picked = full
         q = st.chat_input("Ask about your books…", disabled=READ_ONLY) or picked
         if READ_ONLY:
             st.caption("Chat runs locally with API keys.")
@@ -237,23 +238,31 @@ def _decided(e: dict) -> str:
     if d.startswith("match:"):
         return f"{len(e['document_ids'])} invoice" + ("s" if len(e["document_ids"]) > 1 else "")
     if "crustdata" in d:
-        return "Crustdata lookup"
+        return "Crustdata"
     return "Bill" if e["document_ids"] else "AI"
 
 
+def _account(a: str) -> str:
+    return {"Liabilities:Tax:Collected": "GST paid", "Equity:Owner-Drawings": "Personal"}.get(a, a.split(":")[-1].replace("-", " "))
+
+
 def books_page():
-    entries = load(run_dir())["entries"]
+    entries = sorted(load(run_dir())["entries"], key=lambda e: (e["date"], e["bank_txn_id"]))
     head = st.columns([3, 1])
     head[0].html('<div class="title">Every entry has a reason.</div>')
     head[1].html(f'<div class="pill" style="margin-top:14px;justify-content:center"><img src="{ui.LOGO["entire"]}" '
                  f'style="height:12px" alt="Entire"><span class="muted" style="font-weight:500">Books versioned in Git</span></div>')
-    rows = [{"Date": e["date"][5:], "Payee": e["payee"][:38], "Account": e["account"].split(":")[-1],
-             "Amount ₹": float(e["amount"]), "Decided by": _decided(e)} for e in entries]
-    left, right = st.columns([3, 2], gap="large")
+    rows = [{"Date": datetime.strptime(e["date"], "%Y-%m-%d").strftime("%d %b"), "Payee": e["payee"][:30],
+             "Account": _account(e["account"]), "Amount ₹": float(e["amount"]), "Decided by": _decided(e)} for e in entries]
+    left, right = st.columns([5, 3], gap="large")
     with left:
         sel = st.dataframe(rows, hide_index=True, width="stretch", height=560, on_select="rerun",
                            selection_mode="single-row", key="books-table",
-                           column_config={"Amount ₹": st.column_config.NumberColumn(format="%.2f")})
+                           column_config={"Date": st.column_config.TextColumn(width="small"),
+                                          "Payee": st.column_config.TextColumn(width="medium"),
+                                          "Account": st.column_config.TextColumn(width="small"),
+                                          "Amount ₹": st.column_config.NumberColumn(format="%,.0f", width="small"),
+                                          "Decided by": st.column_config.TextColumn(width="small")})
         st.caption("Tap a row to see why it's there.")
     chosen = sel.selection.rows if sel and getattr(sel, "selection", None) else []
     picked = chosen[0] if chosen else next((i for i, e in enumerate(entries) if "crustdata" in e["decided_by"]), 0)
@@ -263,7 +272,7 @@ def books_page():
         "Rule": ["Bank line matched a standard pattern", f"Booked as {acct}"],
         "You": ["Munshi wasn't sure, so it asked you", f"You said: {e['narration']}", f"Booked as {acct}"],
         "Bill": [f"Matched to bill {', '.join(e['document_ids'])}", "Totals re-added in code", f"Booked as {acct}"],
-        "Crustdata lookup": ["Cryptic bank line", f"Looked up: {e['narration'].split(':')[0]}", f"Booked as {acct}"],
+        "Crustdata": ["Cryptic bank line", f"Looked up: {e['narration'].split(':')[0]}", f"Booked as {acct}"],
         "Refund rule": ["Money came back from a vendor", "Linked to the original payment", "Reduces that expense, not income"],
     }.get(_decided(e), [e["narration"][:120], f"Booked as {acct}"])
     warn = ""
@@ -347,6 +356,7 @@ def actions_page():
                 st.code(draft, language=None, wrap_lines=True)
             else:
                 st.caption("Skipped.")
+            st.html('<div class="spacer"></div>')
 
 
 def proof_page():
@@ -387,12 +397,12 @@ def proof_page():
 
 
 PAGES = {
-    "home": st.Page(home, title="Home", icon=":material/home:", default=True, url_path="home"),
-    "close": st.Page(close_page, title="Close", icon=":material/play_circle:", url_path="close"),
-    "results": st.Page(results_page, title="Results", icon=":material/insights:", url_path="results"),
-    "books": st.Page(books_page, title="Books", icon=":material/menu_book:", url_path="books"),
-    "actions": st.Page(actions_page, title="Actions", icon=":material/task_alt:", url_path="actions"),
-    "proof": st.Page(proof_page, title="Proof", icon=":material/verified:", url_path="proof"),
+    "home": st.Page(home, title="Home", default=True, url_path="home"),
+    "close": st.Page(close_page, title="Close", url_path="close"),
+    "results": st.Page(results_page, title="Results", url_path="results"),
+    "books": st.Page(books_page, title="Books", url_path="books"),
+    "actions": st.Page(actions_page, title="Actions", url_path="actions"),
+    "proof": st.Page(proof_page, title="Proof", url_path="proof"),
 }
 if __name__ == "__main__" or __name__ == "__page__":
     st.navigation(list(PAGES.values()), position="top").run()
