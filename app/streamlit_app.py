@@ -204,7 +204,8 @@ def run_close(office_box, feed_box, previous: dict | None = None, owner_says: st
             states[worker] = "working"
             style = "warn" if ("✗" in message or "⚠" in message or step == "gap_hunt") else ("ok" if "✅" in message else "")
             bubbles[worker] = (short(friendly(step, message)), style)
-        feed.append(f"<div><b>{step}</b> · {message}</div>")
+        who = {k: f"{n}" for k, n, *_ in ui.TEAM}.get(worker, "Munshi")
+        feed.append(f"<div><b>{who}</b> · {friendly(step, message)}</div>")
         office_box.html(ui.line(states, bubbles, owner_says))
         feed_box.html('<div class="card" style="font-size:13px;line-height:1.7;max-height:200px;overflow:hidden">'
                       + "".join(feed[-7:]) + "</div>")

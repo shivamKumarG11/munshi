@@ -73,7 +73,9 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif !important; color: var(--i
 .wnote { font-size:12px; color:var(--muted); text-align:center; }
 .chip { display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:6px; background:#2B3A34; font-size:11px; color:var(--ink); }
 .chip.light { background:var(--ink); color:#0E1613; font-weight:700; letter-spacing:.04em; }
-.chip img { height:11px; }
+.chip img { height:20px; }
+.st .chip { padding:7px 11px; border-radius:9px; font-size:13px; }
+.st .chip.light { font-size:13px; }
 .arrow { margin-bottom:70px; }
 .tile { padding:24px; border-radius:22px; background:var(--tile); border-bottom:9px solid var(--edge);
         box-shadow:0 22px 34px rgba(0,0,0,.45); }
@@ -221,7 +223,7 @@ TEAM = [
     ("bookkeeper", "Meena", "Bookkeeper", f'<span class="chip"><img src="{LOGO["crustdata"]}" alt="Crustdata"></span>', ["match", "post"]),
     ("auditor", "Dev", "Auditor", '<span class="wnote">matches the bank</span>', ["verify", "gap_hunt"]),
     ("collector", "Sana", "Collector", f'<span class="chip"><img src="{LOGO["dodo"]}" alt="Dodo Payments"></span>', ["actions"]),
-    ("briefer", "Kabir", "Briefer", f'<span class="chip"><img src="{LOGO["neatlogs"]}" alt="neatlogs" style="height:12px;border-radius:3px"> traced</span>', ["brief", "update"]),
+    ("briefer", "Kabir", "Briefer", f'<span class="chip"><img src="{LOGO["neatlogs"]}" alt="" style="height:20px;border-radius:5px"> neatlogs</span>', ["brief", "update"]),
 ]
 
 OFFICE_CSS = """
