@@ -4,7 +4,7 @@
 **Page:** https://neatlogs.com/submission. Step 1: quote-tweet the official launch post with the demo video attached
 and all three required tags (@neatlogs @EntireHQ @arithecfo). Steps 2–3: the form. **Both are required.**
 
-## Step 1: the quote post (275 / 280 characters; attach the video)
+## Step 1: the quote post (278 / 280 characters; attach the video)
 ```
 Our #neatHack submission
 
@@ -14,7 +14,7 @@ v1→v2: ₹9,050 off→₹0, traps 2/12→12/12
 
 github.com/shivamKumarG11/munshi
 
-Built with @neatlogs @EntireHQ @dodopayments @crustdata @arithecfo
+Built with @neatlogs @EntireHQ @dodopayments @crustdata cc @arithecfo
 ```
 Reply to your own post right after:
 ```
