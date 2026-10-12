@@ -1,5 +1,8 @@
 # Final demo video script (≤ 3:00): sponsors all the way
 
+Sponsors: **used:** neatlogs · Entire · Dodo Payments · Crustdata · AWS (Amazon Nova via the neatHack model key) ·
+**outlined:** cfo.ai · **story:** TheVibeFounder (one-founder companies) · **not used:** Orchestrator (not claimed).
+
 Every segment names the sponsor doing the work, with its logo on screen. Covers the organisers' brief: the problem ·
 how cfo.ai and Entire are part of the project · how neatlogs found and resolved Munshi's incidents.
 
@@ -15,15 +18,17 @@ Live app (public): https://munshi-bh9x34cncubzjqvgxtzzuy.streamlit.app
 ---
 
 **[0:00–0:15] THE PROBLEM** · *Your month: category tiles → "View large" on the PrintWorks bill*
-> "Small businesses can't afford a CA every day. Month-end is a bank statement and a pile of bills. Duplicates,
-> vendor mistakes, un-billed work and late payers slip through, and the books stop matching the bank."
+> "Small businesses, and the one-founder companies TheVibeFounder talks about, can't afford a CA every day.
+> Month-end is a bank statement and a pile of bills. Duplicates, vendor mistakes, un-billed work and late payers slip
+> through, and the books stop matching the bank."
 
 **[0:15–0:30] MEET THE TEAM** · *Hand it to the team → the office line; point at each logo badge*
-> "Munshi is an AI CA: six workers, each powered by a sponsor. The models come from neatHack's Nova and Claude.
-> Crustdata identifies who you paid. Dodo Payments gets you paid. And neatlogs traces every single step."
+> "Munshi is an AI CA: six workers, each powered by a sponsor. They think with **Amazon Nova on AWS** and Claude,
+> through neatHack's model key. **Crustdata** identifies who you paid. **Dodo Payments** gets you paid. **cfo.ai** is
+> where the closed books go to plan. **Entire** holds the history. And **neatlogs** traces every single step."
 
 **[0:30–1:00] THE CLOSE, LIVE** · *workers light up; Meena's Crustdata badge; Dev: "off by ₹9,050" → "₹0"*
-> "Arjun reads every bill on Nova and Claude, re-adding the totals in code, and he catches a vendor whose bill doesn't
+> "Arjun reads every bill (receipt photos go to **Amazon Nova**), re-adding the totals in code, and he catches a vendor whose bill doesn't
 > add up. Meena hits a cryptic 'RZP-Notion' payment; **Crustdata** resolves it to Notion, a software company, so it's
 > booked as Software. Dev reconciles against the bank: off by ₹9,050. A duplicate bill and that vendor error. Fixed,
 > re-checked: zero."
@@ -58,7 +63,8 @@ Live app (public): https://munshi-bh9x34cncubzjqvgxtzzuy.streamlit.app
 > Every entry shows the reason, and the worker and sponsor tool that decided it."
 
 **[2:52–3:00] CLOSE** · *office, all ✓, logos visible*
-> "Munshi, built with neatlogs, Entire, Dodo Payments and Crustdata. Your books. Closed. Proven."
+> "Munshi: built with neatlogs, Entire, Dodo Payments, Crustdata and Amazon Nova on AWS, planned for cfo.ai.
+> Your books. Closed. Proven."
 
 ---
 Say once, anywhere natural: *"The demo business is generated; the reader is tested on real receipts."*
